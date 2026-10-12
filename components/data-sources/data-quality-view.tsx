@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import {
   BarChart,
   Bar,
@@ -27,6 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { dataSources } from "@/lib/data-sources";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const dimensions = [
   { dimension: "Completeness", value: 93 },
@@ -91,19 +93,22 @@ export function DataQualityView() {
 
   return (
     <div>
-      <PageHeader title="Data Quality Monitor" />
+      <PageHeader icon="visibility" title="Data Quality Monitor" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        <StatCard label="Overall Quality Score" value="94.2%" tone="success" />
-        <StatCard label="Open Issues" value="8" tone="warning" />
-        <StatCard label="Critical Issues" value="1" tone="danger" />
-        <StatCard label="Affected Records" value="2,016" />
-        <StatCard label="Data Sources" value="10" />
+        <StatCard label="Overall Quality Score" value="94.2%" tone="success" icon="verification" />
+        <StatCard label="Open Issues" value="8" tone="warning" icon="warning" />
+        <StatCard label="Critical Issues" value="1" tone="danger" icon="alert" />
+        <StatCard label="Affected Records" value="2,016" icon="database" />
+        <StatCard label="Data Sources" value="10" icon="database" />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
-          <CardHeader><CardTitle className="text-base">Quality Dimensions</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="verification" size="md" />
+              <span className="truncate">Quality Dimensions</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={dimensions} layout="vertical" margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
@@ -117,7 +122,10 @@ export function DataQualityView() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Quality Score by Source</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="verification" size="md" />
+              <span className="truncate">Quality Score by Source</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={dataSources} margin={{ top: 8, right: 8, left: 0, bottom: 40 }}>
@@ -133,7 +141,10 @@ export function DataQualityView() {
       </div>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">Quality Trend</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="verification" size="md" />
+              <span className="truncate">Quality Trend</span>
+            </CardTitle></CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={qualityTrend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -152,7 +163,10 @@ export function DataQualityView() {
       </Card>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">Dimension Breakdown</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="report" size="md" />
+              <span className="truncate">Dimension Breakdown</span>
+            </CardTitle></CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <Table>
@@ -184,7 +198,10 @@ export function DataQualityView() {
       </Card>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">Active Issue Log</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="warning" size="md" />
+              <span className="truncate">Active Issue Log</span>
+            </CardTitle></CardHeader>
         <CardContent>
           <div className="mb-4 space-y-2">
             <FilterTabs options={["All Severities", "Critical", "High", "Medium", "Low"]} value={severity} onChange={setSeverity} />
@@ -210,7 +227,7 @@ export function DataQualityView() {
                     <TableCell className="text-muted-foreground">{i.source}</TableCell>
                     <TableCell className="text-muted-foreground">{i.field}</TableCell>
                     <TableCell className="text-muted-foreground">{i.type}</TableCell>
-                    <TableCell className="text-right">{i.records.toLocaleString()}</TableCell>
+                    <TableCell className="text-right">{i.records.toLocaleString(NUMBER_LOCALE)}</TableCell>
                     <TableCell><Badge variant={severityTone[i.severity]}>{i.severity}</Badge></TableCell>
                     <TableCell className="text-muted-foreground">{i.status}</TableCell>
                   </TableRow>

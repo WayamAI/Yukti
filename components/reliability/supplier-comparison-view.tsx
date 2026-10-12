@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import {
   LineChart,
   Line,
@@ -31,6 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { componentFamilies } from "@/lib/component-families";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const suppliers = [
   { name: "Bharat Heavy Electricals Ltd.", location: "Haridwar", status: "Stable" as const, mult: 1 },
@@ -65,6 +67,7 @@ export function SupplierComparisonView() {
   return (
     <div>
       <PageHeader
+        icon="analytics"
         title="Supplier Reliability Comparison"
         subtitle="Side-by-side supplier performance for selected component family"
       />
@@ -93,15 +96,18 @@ export function SupplierComparisonView() {
           <Card key={s.name}>
             <CardHeader className="flex-row items-center justify-between space-y-0">
               <div>
-                <CardTitle className="text-base">{s.name}</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="metrics" size="md" />
+              <span className="truncate">{s.name}</span>
+            </CardTitle>
                 <p className="text-xs text-muted-foreground">{s.location}</p>
               </div>
               <Badge variant={s.status === "Stable" ? "outline" : "secondary"}>{s.status}</Badge>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-3 text-sm">
-                <div><p className="text-xs text-muted-foreground">Units</p><p className="font-medium">{s.units.toLocaleString()}</p></div>
-                <div><p className="text-xs text-muted-foreground">MTBF</p><p className="font-medium">{s.mtbf.toLocaleString()}h</p></div>
+                <div><p className="text-xs text-muted-foreground">Units</p><p className="font-medium">{s.units.toLocaleString(NUMBER_LOCALE)}</p></div>
+                <div><p className="text-xs text-muted-foreground">MTBF</p><p className="font-medium">{s.mtbf.toLocaleString(NUMBER_LOCALE)}h</p></div>
                 <div><p className="text-xs text-muted-foreground">Failure Rate</p><p className="font-medium">{s.failureRate}/1000h</p></div>
                 <div><p className="text-xs text-muted-foreground">Repair Cost</p><p className="font-medium">₹{(s.cost5 / 5).toFixed(1)}L</p></div>
                 <div><p className="text-xs text-muted-foreground">Composite Score</p><p className="font-medium">{s.status === "Stable" ? 82 : 71}</p></div>
@@ -116,7 +122,10 @@ export function SupplierComparisonView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Overlaid Survival Curves</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="time" size="md" />
+              <span className="truncate">Overlaid Survival Curves</span>
+            </CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={280}>
@@ -135,7 +144,10 @@ export function SupplierComparisonView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Warranty Cost Impact</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Warranty Cost Impact</span>
+            </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>

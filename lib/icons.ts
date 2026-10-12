@@ -1,0 +1,175 @@
+import {
+  Activity,
+  AlertTriangle,
+  Archive,
+  ArrowDown,
+  ArrowDownRight,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUp,
+  ArrowUpDown,
+  ArrowUpRight,
+  BarChart3,
+  Bell,
+  CalendarDays,
+  Car,
+  Check,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+  Cloud,
+  Crosshair,
+  Database,
+  Download,
+  ExternalLink,
+  FileSpreadsheet,
+  FileText,
+  Fuel,
+  Gauge,
+  GitBranch,
+  HelpCircle,
+  Home,
+  Info,
+  Layers,
+  Link,
+  LayoutDashboard,
+  ListFilter,
+  LogOut,
+  Mail,
+  Map,
+  MapPin,
+  Maximize,
+  Menu,
+  Minus,
+  Moon,
+  MoreVertical,
+  Palette,
+  PanelLeft,
+  PanelLeftClose,
+  PanelLeftOpen,
+  PanelRight,
+  Pencil,
+  Play,
+  Plus,
+  RefreshCw,
+  Route,
+  Search,
+  Settings,
+  ShieldCheck,
+  SlidersHorizontal,
+  Sparkles,
+  Sun,
+  Trash2,
+  TrendingDown,
+  TrendingUp,
+  Umbrella,
+  User,
+  Wrench,
+  X,
+  ZoomIn,
+  ZoomOut,
+  type LucideIcon,
+} from "lucide-react";
+
+/**
+ * ICON REGISTRY
+ *
+ *   source (Lucide)  →  semantic name  →  <AppIcon name="…" />  →  component
+ *
+ * Components address icons by meaning, never by glyph. Changing what
+ * "maintenance" looks like is a one-line edit here, and one semantic concept
+ * resolves to exactly one glyph everywhere in the app.
+ *
+ * Lucide is the single icon family: one outlined stroke (1.75, set once in AppIcon), so
+ * no icon reads heavier than its neighbours. Named imports keep it
+ * tree-shakeable — never `import * as Icons`.
+ */
+export const icons = {
+  // --- Navigation --------------------------------------------------------
+  dashboard: LayoutDashboard,
+  reliability: Activity,
+  traceability: GitBranch,
+  warranty: ShieldCheck,
+  maintenance: Wrench,
+  insurance: Umbrella,
+  tender: FileSpreadsheet,
+  dataSources: Database,
+  settings: Settings,
+  home: Home,
+  vehicle: Car,
+  calendar: CalendarDays,
+  document: FileText,
+
+  // --- Actions -----------------------------------------------------------
+  search: Search,
+  add: Plus,
+  edit: Pencil,
+  delete: Trash2,
+  archive: Archive,
+  download: Download,
+  externalLink: ExternalLink,
+  link: Link,
+  refresh: RefreshCw,
+  close: X,
+  check: Check,
+  more: MoreVertical,
+  signOut: LogOut,
+  mail: Mail,
+
+  // --- Direction ---------------------------------------------------------
+  arrowUp: ArrowUp,
+  arrowDown: ArrowDown,
+  arrowLeft: ArrowLeft,
+  arrowRight: ArrowRight,
+  chevronUp: ChevronUp,
+  chevronDown: ChevronDown,
+  chevronLeft: ChevronLeft,
+  chevronRight: ChevronRight,
+
+  // --- System ------------------------------------------------------------
+  notification: Bell,
+  info: Info,
+  warning: AlertTriangle,
+  help: HelpCircle,
+  fullscreen: Maximize,
+  target: Crosshair,
+  layers: Layers,
+  menu: Menu,
+  panelLeft: PanelLeft,
+  panelLeftClose: PanelLeftClose,
+  panelLeftOpen: PanelLeftOpen,
+  panelRight: PanelRight,
+  user: User,
+  cloud: Cloud,
+  sparkle: Sparkles,
+  sun: Sun,
+  moon: Moon,
+  palette: Palette,
+  play: Play,
+  minus: Minus,
+  zoomIn: ZoomIn,
+  zoomOut: ZoomOut,
+
+  // --- Automotive / fleet ------------------------------------------------
+  gauge: Gauge,
+  fuel: Fuel,
+  road: Route,
+  map: Map,
+  location: MapPin,
+
+  // --- Data --------------------------------------------------------------
+  chart: BarChart3,
+  sort: ArrowUpDown,
+  filter: ListFilter,
+  filters: SlidersHorizontal,
+  trendUp: TrendingUp,
+  trendDown: TrendingDown,
+  /* Small change-vs-period markers beside a value (KPI deltas). */
+  deltaUp: ArrowUpRight,
+  deltaDown: ArrowDownRight,
+} as const satisfies Record<string, LucideIcon>;
+
+export type IconName = keyof typeof icons;
+
+export type { LucideIcon };

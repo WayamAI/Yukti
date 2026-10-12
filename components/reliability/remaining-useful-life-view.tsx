@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { PageHeader } from "@/components/page-header";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { StatCard } from "@/components/stat-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const distribution = [
   { range: "0k-5k", critical: 60, warning: 20, healthy: 0 },
@@ -62,19 +64,22 @@ const atRisk = [
 export function RemainingUsefulLifeView() {
   return (
     <div>
-      <PageHeader title="Remaining Useful Life" subtitle="Fleet-wide RUL predictions for all components in service" />
+      <PageHeader icon="time" title="Remaining Useful Life" subtitle="Fleet-wide RUL predictions for all components in service" />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Components Monitored" value="14,847" />
-        <StatCard label="Critical (< 3000h RUL)" value="342" tone="danger" />
-        <StatCard label="Warning (3k-15k hrs)" value="2,184" tone="warning" />
-        <StatCard label="Healthy (> 15k hrs)" value="12,321" tone="success" />
+        <StatCard label="Components Monitored" value="14,847" icon="package" />
+        <StatCard label="Critical (< 3000h RUL)" value="342" tone="danger" icon="alert" />
+        <StatCard label="Warning (3k-15k hrs)" value="2,184" tone="warning" icon="warning" />
+        <StatCard label="Healthy (> 15k hrs)" value="12,321" tone="success" icon="metrics" />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Predicted Remaining Life Distribution</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="time" size="md" />
+              <span className="truncate">Predicted Remaining Life Distribution</span>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={260}>
@@ -94,7 +99,10 @@ export function RemainingUsefulLifeView() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Fleet Age Profile</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="time" size="md" />
+              <span className="truncate">Fleet Age Profile</span>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={260}>
@@ -116,7 +124,10 @@ export function RemainingUsefulLifeView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Components at Risk — Next 6 Months</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="target" size="md" />
+              <span className="truncate">Components at Risk — Next 6 Months</span>
+            </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
@@ -137,8 +148,8 @@ export function RemainingUsefulLifeView() {
                   <TableRow key={r.serial}>
                     <TableCell className="font-medium text-foreground">{r.serial}</TableCell>
                     <TableCell className="text-muted-foreground">{r.type}</TableCell>
-                    <TableCell className="text-right">{r.hours.toLocaleString()}</TableCell>
-                    <TableCell className="text-right">{r.rul.toLocaleString()}</TableCell>
+                    <TableCell className="text-right">{r.hours.toLocaleString(NUMBER_LOCALE)}</TableCell>
+                    <TableCell className="text-right">{r.rul.toLocaleString(NUMBER_LOCALE)}</TableCell>
                     <TableCell className="text-right">{r.prob}%</TableCell>
                     <TableCell>
                       <Badge variant={r.status === "Out of warranty" ? "destructive" : "outline"}>{r.status}</Badge>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import {
   BarChart,
   Bar,
@@ -32,6 +33,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { suppliers } from "@/lib/suppliers";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const batches = [
   "Batch #TM-2026-Q1 (240 units, Jan 2026)",
@@ -79,7 +81,7 @@ export function BlastRadiusView() {
 
   return (
     <div>
-      <PageHeader title="Blast Radius Calculator" subtitle="Assess the impact of a supplier or batch quality issue" />
+      <PageHeader icon="topology" title="Blast Radius Calculator" subtitle="Assess the impact of a supplier or batch quality issue" />
 
       <Card>
         <CardContent className="pt-6 space-y-4">
@@ -124,20 +126,23 @@ export function BlastRadiusView() {
       {calculated && (
         <>
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <StatCard label="Affected Assemblies" value="18" />
-            <StatCard label="In Service" value="17" />
-            <StatCard label="In Warranty" value="12" />
-            <StatCard label="Exposure" value="₹2.34 Cr" tone="warning" />
+            <StatCard label="Affected Assemblies" value="18" icon="package" />
+            <StatCard label="In Service" value="17" icon="tools" />
+            <StatCard label="In Warranty" value="12" icon="security" />
+            <StatCard label="Exposure" value="₹2.34 Cr" tone="warning" icon="finance" />
           </div>
           <div className="mt-4 grid grid-cols-3 gap-4">
-            <StatCard label="Under AMC" value="4" />
-            <StatCard label="Unprotected" value="2" tone="danger" />
-            <StatCard label="Est. Recall/Rework" value="₹1.87 Cr" tone="danger" />
+            <StatCard label="Under AMC" value="4" icon="tools" />
+            <StatCard label="Unprotected" value="2" tone="danger" icon="metrics" />
+            <StatCard label="Est. Recall/Rework" value="₹1.87 Cr" tone="danger" icon="metrics" />
           </div>
 
           <Card className="mt-6">
             <CardHeader>
-              <CardTitle className="text-base">Affected Units</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="package" size="md" />
+              <span className="truncate">Affected Units</span>
+            </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <div className="overflow-x-auto">
@@ -162,7 +167,7 @@ export function BlastRadiusView() {
                         <TableCell className="text-muted-foreground">{u.line}</TableCell>
                         <TableCell className="text-muted-foreground">{u.component}</TableCell>
                         <TableCell className="text-muted-foreground">{u.installed}</TableCell>
-                        <TableCell className="text-right">{u.hours.toLocaleString()}</TableCell>
+                        <TableCell className="text-right">{u.hours.toLocaleString(NUMBER_LOCALE)}</TableCell>
                         <TableCell>
                           <Badge variant={u.status === "Out of Warranty" ? "destructive" : "outline"}>{u.status}</Badge>
                         </TableCell>
@@ -180,7 +185,10 @@ export function BlastRadiusView() {
           <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Affected Units by Location</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="package" size="md" />
+              <span className="truncate">Affected Units by Location</span>
+            </CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={220}>
@@ -197,7 +205,10 @@ export function BlastRadiusView() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Financial Impact Breakdown</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Financial Impact Breakdown</span>
+            </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
                 <Table>
@@ -233,7 +244,10 @@ export function BlastRadiusView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Recent Calculations</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="activity" size="md" />
+              <span className="truncate">Recent Calculations</span>
+            </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           {recentCalculations.map((c, i) => (

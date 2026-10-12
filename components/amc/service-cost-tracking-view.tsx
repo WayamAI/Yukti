@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { PageHeader } from "@/components/page-header";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { StatCard } from "@/components/stat-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -70,19 +71,22 @@ const categoryDetails = [
 export function ServiceCostTrackingView() {
   return (
     <div>
-      <PageHeader title="Service Cost Tracking" subtitle="AMC Management / Service Cost Tracking" />
+      <PageHeader icon="tools" title="Service Cost Tracking" subtitle="AMC Management / Service Cost Tracking" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        <StatCard label="Total Service Cost (YTD)" value="₹219.4 Cr" />
-        <StatCard label="Annual Budget" value="₹248.0 Cr" />
-        <StatCard label="Budget Variance" value="-11.5%" tone="success" />
-        <StatCard label="Cost/Unit/Month" value="₹1.24L" />
-        <StatCard label="Active Contracts" value="12" />
+        <StatCard label="Total Service Cost (YTD)" value="₹219.4 Cr" icon="finance" />
+        <StatCard label="Annual Budget" value="₹248.0 Cr" icon="finance" />
+        <StatCard label="Budget Variance" value="-11.5%" tone="success" icon="finance" />
+        <StatCard label="Cost/Unit/Month" value="₹1.24L" icon="finance" />
+        <StatCard label="Active Contracts" value="12" icon="verification" />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
-          <CardHeader><CardTitle className="text-base">Cost by Category</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Cost by Category</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={byCategory} margin={{ top: 8, right: 8, left: 0, bottom: 40 }}>
@@ -96,7 +100,10 @@ export function ServiceCostTrackingView() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Monthly Cost Trend</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Monthly Cost Trend</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={260}>
               <LineChart data={monthlyTrend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -115,7 +122,10 @@ export function ServiceCostTrackingView() {
       </div>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">Service Cost by Component Family</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Service Cost by Component Family</span>
+            </CardTitle></CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={byFamily} layout="vertical" margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
@@ -132,7 +142,10 @@ export function ServiceCostTrackingView() {
       </Card>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">Category Details</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="report" size="md" />
+              <span className="truncate">Category Details</span>
+            </CardTitle></CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
@@ -149,7 +162,7 @@ export function ServiceCostTrackingView() {
                   <TableCell className="font-medium text-foreground">{c.category}</TableCell>
                   <TableCell className="text-right">{c.cost}</TableCell>
                   <TableCell className="text-right">{c.pct}</TableCell>
-                  <TableCell className={`text-right ${c.trend.startsWith("+") ? "text-destructive" : "text-[oklch(0.6_0.15_150)]"}`}>{c.trend}</TableCell>
+                  <TableCell className={`text-right ${c.trend.startsWith("+") ? "text-destructive" : "text-success"}`}>{c.trend}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

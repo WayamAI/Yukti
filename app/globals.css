@@ -1,44 +1,247 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "./tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 
+/* ---------------------------------------------------------------------------
+   TAILWIND MAPPING
+
+   Exposes the Tier 2 semantic tokens (tokens.css) as utilities. Nothing here
+   reaches for a --ref-* value; this layer only renames roles.
+--------------------------------------------------------------------------- */
+
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), "Geist Mono Fallback", ui-monospace, monospace;
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+  /* =======================================================================
+     COLOR
+     ======================================================================= */
+
+  /* --- Surface — bg-page, bg-container, bg-raised, bg-raised-2, bg-action */
+  --color-container: var(--surface-container);
+  --color-raised: var(--surface-raised);
+  --color-raised-2: var(--surface-raised-x2);
+  --color-action: var(--surface-action);
+  --color-page: var(--surface-page-background);
+  --color-scroll-bar: var(--surface-scroll-bar);
+
+
+  /* --- Text — text-primary … text-on-color ------------------------------ */
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-tertiary: var(--text-tertiary);
+  --color-quaternary: var(--text-quaternary);
+  --color-on-color: var(--text-on-color);
+
+  /* --- Icon — text-icon-primary … --------------------------------------- */
+  --color-icon-primary: var(--icon-primary);
+  --color-icon-secondary: var(--icon-secondary);
+  --color-icon-tertiary: var(--icon-tertiary);
+  --color-icon-quaternary: var(--icon-quaternary);
+  --color-icon-on-color: var(--icon-on-color);
+
+  /* --- Stroke — border-default, border-active, border-muted, … ----------- */
+  --color-default: var(--stroke-default);
+  --color-active: var(--stroke-active);
+  --color-muted: var(--stroke-muted);
+  --color-disabled: var(--stroke-disabled);
+  --color-on-color-stroke: var(--stroke-on-color);
+  /* border-* only, so the stroke ladder reads the same as the spec. */
+  --border-color-disabled: var(--stroke-disabled);
+
+  /* --- Action surface ---------------------------------------------------- */
+  --color-action-primary: var(--action-primary-default);
+  --color-action-primary-hover: var(--action-primary-hover);
+  --color-action-primary-focused: var(--action-primary-focused);
+  --color-action-primary-disabled: var(--action-primary-disabled);
+  /* Generic disabled fill for any action surface. */
+  --color-action-disabled: var(--action-secondary-disabled);
+  --color-action-primary-content: var(--action-primary-content);
+
+  --color-action-secondary: var(--action-secondary-default);
+  --color-action-secondary-hover: var(--action-secondary-hover);
+  --color-action-secondary-focused: var(--action-secondary-focused);
+  --color-action-secondary-disabled: var(--action-secondary-disabled);
+  --color-action-secondary-content: var(--action-secondary-content);
+
+  --color-action-tertiary: var(--action-tertiary-default);
+  --color-action-tertiary-hover: var(--action-tertiary-hover);
+  --color-action-tertiary-focused: var(--action-tertiary-focused);
+  --color-action-tertiary-content: var(--action-tertiary-content);
+
+  /* --- Feedback — text-success, bg-error-background, border-warning-… ---- */
+  --color-success: var(--feedback-success-content);
+  --color-success-icon: var(--feedback-success-icon);
+  --color-success-stroke: var(--feedback-success-stroke);
+  --color-success-background: var(--feedback-success-background);
+
+  --color-info: var(--feedback-info-content);
+  --color-info-icon: var(--feedback-info-icon);
+  --color-info-stroke: var(--feedback-info-stroke);
+  --color-info-background: var(--feedback-info-background);
+
+  --color-neutral-fb: var(--feedback-neutral-content);
+  --color-neutral-icon: var(--feedback-neutral-icon);
+  --color-neutral-stroke: var(--feedback-neutral-stroke);
+  --color-neutral-background: var(--feedback-neutral-background);
+
+  --color-warning: var(--feedback-warning-content);
+  --color-warning-icon: var(--feedback-warning-icon);
+  --color-warning-stroke: var(--feedback-warning-stroke);
+  --color-warning-background: var(--feedback-warning-background);
+
+  --color-error: var(--feedback-error-content);
+  --color-error-icon: var(--feedback-error-icon);
+  --color-error-stroke: var(--feedback-error-stroke);
+  --color-error-background: var(--feedback-error-background);
+
+  /* --- Badge — solid tone fills with white label, per the Chronos language */
+  --color-badge: var(--feedback-badge-content);
+  --color-success-badge: var(--feedback-success-badge);
+  --color-info-badge: var(--feedback-info-badge);
+  --color-neutral-badge: var(--feedback-neutral-badge);
+  --color-warning-badge: var(--feedback-warning-badge);
+  --color-error-badge: var(--feedback-error-badge);
+
+  /* --- Overlay ----------------------------------------------------------- */
+  --color-scrim: var(--scrim);
+  --color-scrim-subtle: var(--scrim-subtle);
+
+  /* =======================================================================
+     TYPOGRAPHY
+     ======================================================================= */
+
+  --font-display: var(--font-michroma), "Michroma";
+  --font-sans: var(--font-geist-sans), "Geist Fallback";
+
+  /* --- Michroma display scale — always weight 400 ------------------------ */
+  --text-display-6xl: 64px;
+  --text-display-6xl--line-height: 1.05;
+  --text-display-6xl--letter-spacing: -0.03em;
+  --text-display-6xl--font-weight: 400;
+
+  --text-display-5xl: 52px;
+  --text-display-5xl--line-height: 1.08;
+  --text-display-5xl--letter-spacing: -0.03em;
+  --text-display-5xl--font-weight: 400;
+
+  --text-display-4xl: 42px;
+  --text-display-4xl--line-height: 1.1;
+  --text-display-4xl--letter-spacing: -0.03em;
+  --text-display-4xl--font-weight: 400;
+
+  --text-display-3xl: 34px;
+  --text-display-3xl--line-height: 1.12;
+  --text-display-3xl--letter-spacing: -0.02em;
+  --text-display-3xl--font-weight: 400;
+
+  --text-display-2xl: 28px;
+  --text-display-2xl--line-height: 1.15;
+  --text-display-2xl--letter-spacing: -0.02em;
+  --text-display-2xl--font-weight: 400;
+
+  --text-display-xl: 22px;
+  --text-display-xl--line-height: 1.2;
+  --text-display-xl--letter-spacing: -0.01em;
+  --text-display-xl--font-weight: 400;
+
+  --text-display-lg: 18px;
+  --text-display-lg--line-height: 1.25;
+  --text-display-lg--letter-spacing: -0.01em;
+  --text-display-lg--font-weight: 400;
+
+  --text-display-base: 14px;
+  --text-display-base--line-height: 1.4;
+  --text-display-base--letter-spacing: -0.01em;
+  --text-display-base--font-weight: 400;
+
+  /* --- Geist functional scale — overrides Tailwind's defaults ------------ */
+  --text-5xl: 48px;
+  --text-5xl--line-height: 52px;
+  --text-4xl: 40px;
+  --text-4xl--line-height: 44px;
+  --text-3xl: 32px;
+  --text-3xl--line-height: 38px;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 30px;
+  --text-xl: 20px;
+  --text-xl--line-height: 26px;
+  --text-lg: 18px;
+  --text-lg--line-height: 24px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+
+  /* --- Semantic roles — text-display-page, text-body-sm, text-label-md …
+     Each binds size + line-height + weight + tracking from the scales above.
+     Pair display roles with `font-display`; Geist is already the default. */
+  --text-display-page: var(--text-display-3xl);
+  --text-display-page--line-height: var(--text-display-3xl--line-height);
+  --text-display-page--letter-spacing: var(--text-display-3xl--letter-spacing);
+  --text-display-page--font-weight: 400;
+
+  --text-display-metric-xl: var(--text-display-5xl);
+  --text-display-metric-xl--line-height: 1;
+  --text-display-metric-xl--letter-spacing: var(--text-display-5xl--letter-spacing);
+  --text-display-metric-xl--font-weight: 400;
+
+  --text-display-metric: var(--text-display-4xl);
+  --text-display-metric--line-height: 1.05;
+  --text-display-metric--letter-spacing: var(--text-display-4xl--letter-spacing);
+  --text-display-metric--font-weight: 400;
+
+  --text-heading-lg: var(--text-2xl);
+  --text-heading-lg--line-height: var(--text-2xl--line-height);
+  --text-heading-lg--letter-spacing: -0.01em;
+  --text-heading-lg--font-weight: 600;
+
+  --text-heading-md: var(--text-lg);
+  --text-heading-md--line-height: var(--text-lg--line-height);
+  --text-heading-md--letter-spacing: -0.01em;
+  --text-heading-md--font-weight: 600;
+
+  --text-heading-sm: var(--text-base);
+  --text-heading-sm--line-height: 22px;
+  --text-heading-sm--letter-spacing: -0.01em;
+  --text-heading-sm--font-weight: 600;
+
+  --text-body-lg: var(--text-base);
+  --text-body-lg--line-height: var(--text-base--line-height);
+  --text-body-lg--letter-spacing: -0.01em;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: var(--text-sm);
+  --text-body-md--line-height: var(--text-sm--line-height);
+  --text-body-md--letter-spacing: -0.01em;
+  --text-body-md--font-weight: 400;
+
+  --text-body-sm: var(--text-xs);
+  --text-body-sm--line-height: var(--text-xs--line-height);
+  --text-body-sm--letter-spacing: -0.01em;
+  --text-body-sm--font-weight: 400;
+
+  --text-label-md: var(--text-sm);
+  --text-label-md--line-height: var(--text-sm--line-height);
+  --text-label-md--letter-spacing: 0;
+  --text-label-md--font-weight: 500;
+
+  --text-label-sm: var(--text-xs);
+  --text-label-sm--line-height: var(--text-xs--line-height);
+  --text-label-sm--letter-spacing: 0;
+  --text-label-sm--font-weight: 500;
+
+  --text-caption: var(--text-xs);
+  --text-caption--line-height: var(--text-xs--line-height);
+  --text-caption--letter-spacing: 0;
+  --text-caption--font-weight: 500;
+
+  /* =======================================================================
+     GEOMETRY
+     ======================================================================= */
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -46,75 +249,46 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-}
+  --radius-card: var(--radius-card-size);
+  --radius-panel: var(--radius-panel-size);
 
-:root {
-  --background: oklch(0.99 0.002 60);
-  --foreground: oklch(0.2 0.02 40);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 40);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.02 40);
-  --primary: oklch(0.646 0.222 41.116);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.96 0.01 50);
-  --secondary-foreground: oklch(0.25 0.02 40);
-  --muted: oklch(0.96 0.01 50);
-  --muted-foreground: oklch(0.5 0.02 40);
-  --accent: oklch(0.94 0.05 55);
-  --accent-foreground: oklch(0.35 0.15 40);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.91 0.01 50);
-  --input: oklch(0.91 0.01 50);
-  --ring: oklch(0.705 0.213 47.604);
-  --chart-1: oklch(0.705 0.213 47.604);
-  --chart-2: oklch(0.55 0.16 255);
-  --chart-3: oklch(0.55 0.02 40);
-  --chart-4: oklch(0.75 0.18 70);
-  --chart-5: oklch(0.6 0.2 20);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.94 0.06 42);
-  --sidebar-foreground: oklch(0.32 0.05 30);
-  --sidebar-primary: oklch(0.74 0.14 38);
-  --sidebar-primary-foreground: oklch(0.18 0.03 18);
-  --sidebar-accent: oklch(0.88 0.08 40);
-  --sidebar-accent-foreground: oklch(0.26 0.05 24);
-  --sidebar-border: oklch(0.55 0.06 32 / 18%);
-  --sidebar-ring: oklch(0.74 0.14 38);
-}
+  --shadow-card: var(--shadow-card-value);
+  --shadow-float: var(--shadow-float-value);
+  --shadow-pop: var(--shadow-pop-value);
 
-.dark {
-  --background: oklch(0.16 0.015 40);
-  --foreground: oklch(0.96 0.005 60);
-  --card: oklch(0.21 0.015 40);
-  --card-foreground: oklch(0.96 0.005 60);
-  --popover: oklch(0.21 0.015 40);
-  --popover-foreground: oklch(0.96 0.005 60);
-  --primary: oklch(0.705 0.213 47.604);
-  --primary-foreground: oklch(0.16 0.015 40);
-  --secondary: oklch(0.28 0.015 40);
-  --secondary-foreground: oklch(0.96 0.005 60);
-  --muted: oklch(0.28 0.015 40);
-  --muted-foreground: oklch(0.68 0.01 50);
-  --accent: oklch(0.32 0.06 50);
-  --accent-foreground: oklch(0.96 0.005 60);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.705 0.213 47.604);
-  --chart-1: oklch(0.705 0.213 47.604);
-  --chart-2: oklch(0.62 0.16 255);
-  --chart-3: oklch(0.708 0.01 50);
-  --chart-4: oklch(0.75 0.18 70);
-  --chart-5: oklch(0.6 0.2 20);
-  --sidebar: oklch(0.42 0.11 38);
-  --sidebar-foreground: oklch(0.96 0.04 36);
-  --sidebar-primary: oklch(0.72 0.14 36);
-  --sidebar-primary-foreground: oklch(0.12 0.02 16);
-  --sidebar-accent: oklch(0.55 0.13 36);
-  --sidebar-accent-foreground: oklch(0.98 0.03 36);
-  --sidebar-border: oklch(1 0 0 / 15%);
-  --sidebar-ring: oklch(0.72 0.14 36);
+  /* =======================================================================
+     shadcn ALIASES — every one resolves through a semantic token
+     ======================================================================= */
+  --color-background: var(--surface-page-background);
+  --color-foreground: var(--text-primary);
+  --color-card: var(--surface-container);
+  --color-card-foreground: var(--text-primary);
+  --color-popover: var(--surface-raised);
+  --color-popover-foreground: var(--text-primary);
+  --color-primary-foreground: var(--action-primary-content);
+  --color-secondary-foreground: var(--text-primary);
+  --color-muted-foreground: var(--text-secondary);
+  --color-accent: var(--surface-raised-x2);
+  --color-accent-foreground: var(--text-primary);
+  --color-destructive: var(--feedback-error-icon);
+  --color-border: var(--stroke-muted);
+  --color-input: var(--stroke-default);
+  --color-ring: var(--stroke-active);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--feedback-warning-icon);
+  --color-chart-4: var(--feedback-error-icon);
+  --color-chart-5: var(--feedback-success-icon);
+
+  --color-sidebar: var(--surface-container);
+  --color-sidebar-foreground: var(--text-secondary);
+  --color-sidebar-primary: var(--action-primary-default);
+  --color-sidebar-primary-foreground: var(--action-primary-content);
+  --color-sidebar-accent: var(--surface-raised);
+  --color-sidebar-accent-foreground: var(--text-primary);
+  --color-sidebar-border: var(--stroke-muted);
+  --color-sidebar-ring: var(--stroke-active);
 }
 
 @layer base {
@@ -122,9 +296,198 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-page text-primary font-sans;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  html,
+  body {
+    @apply h-full overflow-hidden overscroll-none;
   }
   html {
     @apply font-sans;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   SEMANTIC TYPOGRAPHY
+
+   Components pick a role (`type-heading-md`), never a size. Each class binds
+   family + size + line-height + weight + tracking so a heading cannot drift.
+--------------------------------------------------------------------------- */
+
+@layer components {
+  /* Each class reads its role from the @theme tokens above, so the
+     `type-*` class and the `text-*` utility can never disagree; the class
+     also sets the family. */
+
+  /* --- Display (Michroma) — identity, telemetry, hero numbers */
+  .type-display-page {
+    font-family: var(--font-display);
+    font-size: var(--text-display-page);
+    line-height: var(--text-display-page--line-height);
+    letter-spacing: var(--text-display-page--letter-spacing);
+    font-weight: var(--text-display-page--font-weight);
+  }
+
+  .type-display-metric-xl {
+    font-family: var(--font-display);
+    font-size: var(--text-display-metric-xl);
+    line-height: var(--text-display-metric-xl--line-height);
+    letter-spacing: var(--text-display-metric-xl--letter-spacing);
+    font-weight: var(--text-display-metric-xl--font-weight);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .type-display-metric {
+    font-family: var(--font-display);
+    font-size: var(--text-display-metric);
+    line-height: var(--text-display-metric--line-height);
+    letter-spacing: var(--text-display-metric--letter-spacing);
+    font-weight: var(--text-display-metric--font-weight);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* --- Heading (Geist) */
+  .type-heading-lg {
+    font-family: var(--font-sans);
+    font-size: var(--text-heading-lg);
+    line-height: var(--text-heading-lg--line-height);
+    letter-spacing: var(--text-heading-lg--letter-spacing);
+    font-weight: var(--text-heading-lg--font-weight);
+  }
+
+  .type-heading-md {
+    font-family: var(--font-sans);
+    font-size: var(--text-heading-md);
+    line-height: var(--text-heading-md--line-height);
+    letter-spacing: var(--text-heading-md--letter-spacing);
+    font-weight: var(--text-heading-md--font-weight);
+  }
+
+  .type-heading-sm {
+    font-family: var(--font-sans);
+    font-size: var(--text-heading-sm);
+    line-height: var(--text-heading-sm--line-height);
+    letter-spacing: var(--text-heading-sm--letter-spacing);
+    font-weight: var(--text-heading-sm--font-weight);
+  }
+
+  /* --- Body (Geist) */
+  .type-body-lg {
+    font-family: var(--font-sans);
+    font-size: var(--text-body-lg);
+    line-height: var(--text-body-lg--line-height);
+    letter-spacing: var(--text-body-lg--letter-spacing);
+    font-weight: var(--text-body-lg--font-weight);
+  }
+
+  .type-body-md {
+    font-family: var(--font-sans);
+    font-size: var(--text-body-md);
+    line-height: var(--text-body-md--line-height);
+    letter-spacing: var(--text-body-md--letter-spacing);
+    font-weight: var(--text-body-md--font-weight);
+  }
+
+  .type-body-sm {
+    font-family: var(--font-sans);
+    font-size: var(--text-body-sm);
+    line-height: var(--text-body-sm--line-height);
+    letter-spacing: var(--text-body-sm--letter-spacing);
+    font-weight: var(--text-body-sm--font-weight);
+  }
+
+  /* --- Label (Geist) — buttons, nav, filters, table headings */
+  .type-label-md {
+    font-family: var(--font-sans);
+    font-size: var(--text-label-md);
+    line-height: var(--text-label-md--line-height);
+    letter-spacing: var(--text-label-md--letter-spacing);
+    font-weight: var(--text-label-md--font-weight);
+  }
+
+  .type-label-sm {
+    font-family: var(--font-sans);
+    font-size: var(--text-label-sm);
+    line-height: var(--text-label-sm--line-height);
+    letter-spacing: var(--text-label-sm--letter-spacing);
+    font-weight: var(--text-label-sm--font-weight);
+  }
+
+  /* --- Caption (Geist) — metadata, timestamps, telemetry labels */
+  .type-caption {
+    font-family: var(--font-sans);
+    font-size: var(--text-caption);
+    line-height: var(--text-caption--line-height);
+    letter-spacing: var(--text-caption--letter-spacing);
+    font-weight: var(--text-caption--font-weight);
+  }
+
+  /* Column heading / eyebrow label, built on the caption role. */
+  .label-caps {
+    font-family: var(--font-sans);
+    font-size: var(--text-caption);
+    line-height: var(--text-caption--line-height);
+    font-weight: var(--text-caption--font-weight);
+    letter-spacing: 0.02em;
+    color: var(--text-tertiary);
+  }
+}
+
+@layer components {
+  /* A hairline-bordered container. Elevation reads from the surface step and
+     the stroke, not from a shadow. */
+  .surface-card {
+    background-color: var(--surface-container);
+    border: 1px solid var(--stroke-muted);
+  }
+
+  /* An element floating over other content. Opaque — no backdrop blur. */
+  .surface-float {
+    background-color: var(--surface-raised-x2);
+    border: 1px solid var(--stroke-default);
+    box-shadow: var(--shadow-float);
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-scroll-bar) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--surface-scroll-bar);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: var(--surface-scroll-bar-hover);
+    background-clip: content-box;
+  }
+}
+
+/* Theme-scoped visibility. Used by paired brand marks so each theme shows its
+   own asset; defaults to the dark mark when no theme has been stamped yet. */
+.theme-light-only {
+  display: none;
+}
+
+[data-theme="light"] .theme-light-only {
+  display: block;
+}
+
+[data-theme="light"] .theme-dark-only {
+  display: none;
 }

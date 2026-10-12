@@ -57,15 +57,15 @@ export function RiskAlertsView() {
 
   return (
     <div>
-      <PageHeader title="Risk Alerts" />
+      <PageHeader icon="alert" title="Risk Alerts" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-        <StatCard label="Open Alerts" value={`${open.length}`} />
-        <StatCard label="Critical" value={`${open.filter((a) => a.severity === "Critical").length}`} tone="danger" />
-        <StatCard label="Warning" value={`${open.filter((a) => a.severity === "Warning").length}`} tone="warning" />
-        <StatCard label="Info" value={`${open.filter((a) => a.severity === "Info").length}`} />
-        <StatCard label="Avg Time to Acknowledge" value="4.2 hrs" />
-        <StatCard label="Avg Time to Resolve" value="6.8 days" />
+        <StatCard label="Open Alerts" value={`${open.length}`} icon="notifications" />
+        <StatCard label="Critical" value={`${open.filter((a) => a.severity === "Critical").length}`} tone="danger" icon="alert" />
+        <StatCard label="Warning" value={`${open.filter((a) => a.severity === "Warning").length}`} tone="warning" icon="warning" />
+        <StatCard label="Info" value={`${open.filter((a) => a.severity === "Info").length}`} icon="notifications" />
+        <StatCard label="Avg Time to Acknowledge" value="4.2 hrs" icon="time" />
+        <StatCard label="Avg Time to Resolve" value="6.8 days" icon="time" />
       </div>
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3">

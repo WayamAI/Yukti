@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -58,6 +59,7 @@ export function ModelParametersView() {
     <div>
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <PageHeader
+        icon="controls"
           title="Model Parameters"
           subtitle="Tune reliability models, Weibull parameters, cost assumptions, and threshold configurations"
         />
@@ -76,11 +78,14 @@ export function ModelParametersView() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {visibleSections.map((s) => (
           <Card key={s.key}>
-            <CardHeader><CardTitle className="text-base">{s.title}</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="metrics" size="md" />
+              <span className="truncate">{s.title}</span>
+            </CardTitle></CardHeader>
             <CardContent className="space-y-4">
               {s.fields.map((f) => (
                 <div key={f.label} className="space-y-1.5">
-                  <Label className="text-xs uppercase text-muted-foreground">
+                  <Label className="text-xs  text-muted-foreground">
                     {f.label} {f.unit && <span className="normal-case">({f.unit})</span>}
                   </Label>
                   <Input type="number" defaultValue={f.value} />

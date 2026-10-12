@@ -13,7 +13,7 @@ import { policies } from "@/lib/insurance-data";
 export function InsuranceCoverageView() {
   return (
     <div>
-      <PageHeader title="Insurance Coverage Overview" subtitle="Current insurance portfolio mapped to warranty obligations" />
+      <PageHeader icon="verification" title="Insurance Coverage Overview" subtitle="Current insurance portfolio mapped to warranty obligations" />
 
       <Card>
         <CardContent className="p-0">

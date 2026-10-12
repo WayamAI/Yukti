@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { PageHeader } from "@/components/page-header";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { StatCard } from "@/components/stat-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const riskFactors = [
   { factor: "Quality", value: 52 },
@@ -94,6 +96,7 @@ export function SupplierDeepDiveView() {
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
+            <YuktiIcon name="handshake" size="3xl" />
             <h1 className="text-2xl font-semibold tracking-tight text-foreground">Medha Servo Drives</h1>
             <Badge variant="secondary">Under Review</Badge>
           </div>
@@ -109,16 +112,19 @@ export function SupplierDeepDiveView() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
-        <StatCard label="Composite Risk Score" value="58/100" tone="danger" />
-        <StatCard label="Total Installed Base" value="1,420" />
-        <StatCard label="In-Warranty Units" value="1,180" />
-        <StatCard label="Warranty Exposure" value="₹8.4 Cr" tone="warning" />
-        <StatCard label="Expected Claims (12mo)" value="₹2.8 Cr" tone="warning" />
+        <StatCard label="Composite Risk Score" value="58/100" tone="danger" icon="target" />
+        <StatCard label="Total Installed Base" value="1,420" icon="package" />
+        <StatCard label="In-Warranty Units" value="1,180" icon="security" />
+        <StatCard label="Warranty Exposure" value="₹8.4 Cr" tone="warning" icon="finance" />
+        <StatCard label="Expected Claims (12mo)" value="₹2.8 Cr" tone="warning" icon="checklist" />
       </div>
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Risk Factor Breakdown</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="target" size="md" />
+              <span className="truncate">Risk Factor Breakdown</span>
+            </CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={220}>
@@ -135,7 +141,10 @@ export function SupplierDeepDiveView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Components Supplied</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="package" size="md" />
+              <span className="truncate">Components Supplied</span>
+            </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
@@ -155,7 +164,7 @@ export function SupplierDeepDiveView() {
                 <TableRow key={c.family}>
                   <TableCell className="font-medium text-foreground">{c.family}</TableCell>
                   <TableCell className="text-muted-foreground">{c.parts}</TableCell>
-                  <TableCell className="text-right">{c.installed.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">{c.installed.toLocaleString(NUMBER_LOCALE)}</TableCell>
                   <TableCell className="text-right">{c.mtbf}</TableCell>
                   <TableCell className="text-right">{c.failureRate}</TableCell>
                   <TableCell className="text-right">{c.cost5}</TableCell>
@@ -169,7 +178,10 @@ export function SupplierDeepDiveView() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card>
-          <CardHeader><CardTitle className="text-base">Quality Rejection Rate</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="verification" size="md" />
+              <span className="truncate">Quality Rejection Rate</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={rejectionTrend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -184,7 +196,10 @@ export function SupplierDeepDiveView() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">On-Time Delivery Rate</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="analytics" size="md" />
+              <span className="truncate">On-Time Delivery Rate</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={otdTrend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -198,7 +213,10 @@ export function SupplierDeepDiveView() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Composite Risk Score Trend</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="target" size="md" />
+              <span className="truncate">Composite Risk Score Trend</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={scoreTrend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -215,7 +233,10 @@ export function SupplierDeepDiveView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Recent Quality Events</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="verification" size="md" />
+              <span className="truncate">Recent Quality Events</span>
+            </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>

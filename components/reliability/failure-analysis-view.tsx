@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import {
   LineChart,
   Line,
@@ -31,6 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { componentFamilies } from "@/lib/component-families";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const failureModes = [
   "Bearing seizure",
@@ -80,7 +82,7 @@ export function FailureAnalysisView() {
 
   return (
     <div>
-      <PageHeader title="Failure Analysis" subtitle="Component Reliability / Failure Analysis" />
+      <PageHeader icon="warning" title="Failure Analysis" subtitle="Component Reliability / Failure Analysis" />
 
       <div className="mb-6 max-w-sm">
         <Select
@@ -102,22 +104,25 @@ export function FailureAnalysisView() {
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        <StatCard label="Installed Base" value={installedBase.toLocaleString()} />
-        <StatCard label="MTBF" value={`${mtbf.toLocaleString()} hrs`} />
-        <StatCard label="Failure Rate" value={`${family.baseFailureRate.toFixed(2)}/1000h`} />
-        <StatCard label="Total Failures (12m)" value={`${totalFailures}`} />
-        <StatCard label="Warranty Claims Filed" value={`${claimsFiled} (${Math.round((claimsFiled / totalFailures) * 100)}%)`} />
-        <StatCard label="Total Claim Cost (12m)" value={`₹${totalClaimCost.toFixed(2)} Cr`} />
-        <StatCard label="Avg Time to Repair" value="6.2 hours" />
-        <StatCard label="Dominant Supplier" value="Medha Servo (38%)" />
-        <StatCard label="Warranty Coverage Rate" value={`${Math.round((claimsFiled / totalFailures) * 100)}%`} />
-        <StatCard label="Avg Age at Failure" value={`${Math.round(mtbf * 0.5).toLocaleString()} hrs`} />
+        <StatCard label="Installed Base" value={installedBase.toLocaleString(NUMBER_LOCALE)} icon="package" />
+        <StatCard label="MTBF" value={`${mtbf.toLocaleString(NUMBER_LOCALE)} hrs`} icon="metrics" />
+        <StatCard label="Failure Rate" value={`${family.baseFailureRate.toFixed(2)}/1000h`} icon="warning" />
+        <StatCard label="Total Failures (12m)" value={`${totalFailures}`} icon="warning" />
+        <StatCard label="Warranty Claims Filed" value={`${claimsFiled} (${Math.round((claimsFiled / totalFailures) * 100)}%)`} icon="security" />
+        <StatCard label="Total Claim Cost (12m)" value={`₹${totalClaimCost.toFixed(2)} Cr`} icon="finance" />
+        <StatCard label="Avg Time to Repair" value="6.2 hours" icon="time" />
+        <StatCard label="Dominant Supplier" value="Medha Servo (38%)" icon="handshake" />
+        <StatCard label="Warranty Coverage Rate" value={`${Math.round((claimsFiled / totalFailures) * 100)}%`} icon="security" />
+        <StatCard label="Avg Age at Failure" value={`${Math.round(mtbf * 0.5).toLocaleString(NUMBER_LOCALE)} hrs`} icon="time" />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Weibull Survival Curve</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="time" size="md" />
+              <span className="truncate">Weibull Survival Curve</span>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={260}>
@@ -134,7 +139,10 @@ export function FailureAnalysisView() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Failure Mode Breakdown (Pareto)</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="warning" size="md" />
+              <span className="truncate">Failure Mode Breakdown (Pareto)</span>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={260}>
@@ -152,7 +160,10 @@ export function FailureAnalysisView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Failure Mode Details</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="warning" size="md" />
+              <span className="truncate">Failure Mode Details</span>
+            </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
@@ -172,7 +183,7 @@ export function FailureAnalysisView() {
                   <TableCell className="text-right">{p.count}</TableCell>
                   <TableCell className="text-right">{((p.count / totalFailures) * 100).toFixed(1)}%</TableCell>
                   <TableCell className="text-right">₹{(family.baseRepairCostLakh * 0.75).toFixed(1)}L</TableCell>
-                  <TableCell className="text-right">{Math.round(mtbf * 0.85).toLocaleString()}</TableCell>
+                  <TableCell className="text-right">{Math.round(mtbf * 0.85).toLocaleString(NUMBER_LOCALE)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

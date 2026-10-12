@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { dataSources } from "@/lib/data-sources";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 type LogRow = {
   id: string; timestamp: string; source: string; type: string;
@@ -35,7 +36,7 @@ function buildLogs(): LogRow[] {
         ? "Connection timeout after 30s"
         : status === "warning"
         ? `Partial sync — ${(i % 20) + 1} records skipped`
-        : `${records.toLocaleString()} records synced`;
+        : `${records.toLocaleString(NUMBER_LOCALE)} records synced`;
     rows.push({
       id: `ING-${10049 - i}`,
       timestamp: `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:00`,
@@ -69,13 +70,13 @@ export function IngestionLogsView() {
 
   return (
     <div>
-      <PageHeader title="Ingestion Logs" subtitle="Real-time data ingestion activity and error tracking" />
+      <PageHeader icon="database" title="Ingestion Logs" subtitle="Real-time data ingestion activity and error tracking" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label="Total Syncs (24h)" value="50" />
-        <StatCard label="Success Rate" value="60.0%" tone="warning" />
-        <StatCard label="Records Synced" value="1,173,297" />
-        <StatCard label="Errors" value="6" tone="danger" />
+        <StatCard label="Total Syncs (24h)" value="50" icon="sync" />
+        <StatCard label="Success Rate" value="60.0%" tone="warning" icon="analytics" />
+        <StatCard label="Records Synced" value="1,173,297" icon="sync" />
+        <StatCard label="Errors" value="6" tone="danger" icon="warning" />
       </div>
 
       <div className="mt-6">
@@ -105,7 +106,7 @@ export function IngestionLogsView() {
                     <TableCell className="text-muted-foreground">{l.timestamp}</TableCell>
                     <TableCell className="text-muted-foreground">{l.source}</TableCell>
                     <TableCell className="text-muted-foreground">{l.type}</TableCell>
-                    <TableCell className="text-right">{l.records.toLocaleString()}</TableCell>
+                    <TableCell className="text-right">{l.records.toLocaleString(NUMBER_LOCALE)}</TableCell>
                     <TableCell className="text-right">{l.duration}</TableCell>
                     <TableCell><Badge variant={statusTone[l.status]}>{l.status}</Badge></TableCell>
                     <TableCell className="text-muted-foreground">{l.message}</TableCell>

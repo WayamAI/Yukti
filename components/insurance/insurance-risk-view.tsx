@@ -16,10 +16,10 @@ import { insuranceRiskRows } from "@/lib/insurance-data";
 export function InsuranceRiskView() {
   return (
     <div>
-      <PageHeader title="Actual vs. Assumed Risk" subtitle="Comparison of insurer assumptions against actual reliability data" />
+      <PageHeader icon="target" title="Actual vs. Assumed Risk" subtitle="Comparison of insurer assumptions against actual reliability data" />
 
       <div className="max-w-xs">
-        <StatCard label="Total Annual Savings Opportunity" value="₹3.2 Cr/yr" tone="success" />
+        <StatCard label="Total Annual Savings Opportunity" value="₹3.2 Cr/yr" tone="success" icon="finance" />
       </div>
 
       <Card className="mt-6">
@@ -41,7 +41,7 @@ export function InsuranceRiskView() {
                   <TableCell className="font-medium text-foreground">{r.component}</TableCell>
                   <TableCell className="text-right">{r.assumed}/1000h</TableCell>
                   <TableCell className="text-right">{r.actual}/1000h</TableCell>
-                  <TableCell className={`text-right ${r.delta > 0 ? "text-destructive" : "text-[oklch(0.6_0.15_150)]"}`}>
+                  <TableCell className={`text-right ${r.delta > 0 ? "text-destructive" : "text-success"}`}>
                     {r.delta > 0 ? "+" : ""}{r.delta}%
                   </TableCell>
                   <TableCell className="text-right">{r.impact}</TableCell>

@@ -44,15 +44,15 @@ export function AlertConfigView() {
   return (
     <div>
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-        <PageHeader title="Alert Configuration" subtitle="Configure alert thresholds, notification channels, and escalation rules" />
+        <PageHeader icon="notifications" title="Alert Configuration" subtitle="Configure alert thresholds, notification channels, and escalation rules" />
         <Button>Add Rule</Button>
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label="Active Rules" value={`${rules.filter((r) => r.enabled).length}`} />
-        <StatCard label="Critical Rules" value={`${rules.filter((r) => r.severity === "Critical").length}`} tone="danger" />
-        <StatCard label="Channels" value="3" />
-        <StatCard label="Disabled" value={`${rules.filter((r) => !r.enabled).length}`} />
+        <StatCard label="Active Rules" value={`${rules.filter((r) => r.enabled).length}`} icon="controls" />
+        <StatCard label="Critical Rules" value={`${rules.filter((r) => r.severity === "Critical").length}`} tone="danger" icon="alert" />
+        <StatCard label="Channels" value="3" icon="users" />
+        <StatCard label="Disabled" value={`${rules.filter((r) => !r.enabled).length}`} icon="metrics" />
       </div>
 
       <Card className="mt-6">

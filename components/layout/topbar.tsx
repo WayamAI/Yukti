@@ -1,55 +1,57 @@
 "use client";
 
+import * as React from "react";
 import { usePathname } from "next/navigation";
-import { Bell, Search, LogOut } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { navGroups } from "@/lib/nav-config";
-import { logout } from "@/app/login/actions";
+import { AppIcon } from "@/components/ui/app-icon";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { navItemForPath, groupForPath } from "@/lib/nav-config";
+import { SidebarMenuButton } from "@/components/layout/sidebar";
 
-function useBreadcrumb(pathname: string) {
-  if (pathname === "/") return "Dashboard";
-  for (const group of navGroups) {
-    const child = group.children?.find((c) => c.href === pathname);
-    if (child) return `${group.label} / ${child.label}`;
-  }
-  return "OptimizeAI";
-}
-
-export function Topbar() {
+/**
+ * Application top bar: where you are and the global entry points. Always
+ * visible — it replaces the page header's breadcrumb on every screen.
+ */
+export function Topbar({ onMenu }: { onMenu?: () => void }) {
   const pathname = usePathname();
-  const breadcrumb = useBreadcrumb(pathname);
+  const item = navItemForPath(pathname);
+  const group = groupForPath(pathname);
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-border bg-background px-6 shrink-0">
-      <p className="text-sm text-muted-foreground">{breadcrumb}</p>
-      <div className="flex items-center gap-4">
-        <div className="hidden sm:flex items-center gap-2 rounded-md border border-input bg-secondary/50 px-3 py-1.5 text-sm text-muted-foreground w-56">
-          <Search className="h-4 w-4" />
-          <span className="flex-1">Search...</span>
-          <kbd className="text-xs bg-muted px-1.5 py-0.5 rounded">⌘K</kbd>
-        </div>
+    <header className="flex h-16 shrink-0 items-center justify-between gap-3 border-b border-muted bg-page px-4 sm:gap-4 sm:px-5">
+      <div className="flex min-w-0 items-center gap-2.5">
+        {onMenu ? <SidebarMenuButton onClick={onMenu} /> : null}
+        {group ? (
+          <span className="hidden text-caption text-quaternary sm:inline">
+            {group.label}
+          </span>
+        ) : null}
+        <h1 className="truncate font-display text-display-lg text-primary">
+          {item?.label ?? "Yukti"}
+        </h1>
+      </div>
+
+      <div className="flex shrink-0 items-center gap-2">
+        <ThemeToggle />
+
+        <button
+          type="button"
+          aria-label="Search"
+          className="flex h-8 items-center gap-2 rounded-full border border-muted bg-action px-3 text-label-sm text-tertiary outline-none transition-colors duration-[180ms] hover:border-default hover:bg-raised hover:text-secondary focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <AppIcon name="search" size="sm" />
+          <span className="hidden sm:inline">Search</span>
+          <kbd className="hidden rounded border border-muted px-1 text-caption text-quaternary sm:inline">
+            CtrlK
+          </kbd>
+        </button>
+
         <button
           type="button"
           aria-label="Notifications"
-          className="relative flex items-center justify-center h-9 w-9 rounded-md hover:bg-secondary transition-colors"
+          className="flex size-8 items-center justify-center rounded-full bg-action text-icon-tertiary outline-none transition-colors duration-[180ms] hover:bg-raised hover:text-icon-secondary focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <Bell className="h-4.5 w-4.5 text-muted-foreground" />
-          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground">
-            4
-          </span>
+          <AppIcon name="notification" size="md" />
         </button>
-        <Badge className="bg-primary/10 text-primary border border-primary/20 hover:bg-primary/10">
-          Executive
-        </Badge>
-        <form action={logout}>
-          <button
-            type="submit"
-            aria-label="Sign out"
-            className="flex items-center justify-center h-9 w-9 rounded-md text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
-          >
-            <LogOut className="h-4 w-4" />
-          </button>
-        </form>
       </div>
     </header>
   );

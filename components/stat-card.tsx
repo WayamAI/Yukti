@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { YuktiIcon, type YuktiIconName } from "@/components/ui/yukti-icon";
 import { cn } from "@/lib/utils";
+import { AppIcon } from "@/components/ui/app-icon";
 
 export function StatCard({
   label,
@@ -8,35 +8,47 @@ export function StatCard({
   note,
   trend,
   tone = "default",
+  icon,
 }: {
   label: string;
   value: string;
   note?: string;
   trend?: "up" | "down";
   tone?: "default" | "warning" | "danger" | "success";
+  /** Optional Yukti brand mark, shown beside the label. Omitted by default,
+   *  so cards that do not opt in render exactly as before. */
+  icon?: YuktiIconName;
 }) {
   const toneClasses: Record<string, string> = {
     default: "text-muted-foreground",
-    warning: "text-[oklch(0.75_0.18_70)]",
+    warning: "text-warning",
     danger: "text-destructive",
-    success: "text-[oklch(0.6_0.15_150)]",
+    success: "text-success",
   };
 
   return (
-    <Card>
-      <CardContent className="p-5">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+    <div className="flex min-w-0 flex-col gap-1.5 rounded-lg border border-muted bg-container px-4 py-3.5">
+      {icon ? (
+        <span className="flex items-center justify-between gap-2">
+          <span className="truncate text-caption text-quaternary">{label}</span>
+          <YuktiIcon name={icon} size="lg" />
+        </span>
+      ) : (
+        <span className="truncate text-caption text-quaternary">
           {label}
-        </p>
-        <p className="mt-2 text-2xl font-semibold text-foreground">{value}</p>
-        {note && (
-          <p className={cn("mt-1.5 flex items-center gap-1 text-xs font-medium", toneClasses[tone])}>
-            {trend === "up" && <TrendingUp className="h-3.5 w-3.5" />}
-            {trend === "down" && <TrendingDown className="h-3.5 w-3.5" />}
-            {note}
-          </p>
-        )}
-      </CardContent>
-    </Card>
+        </span>
+      )}
+      <span className="font-display text-display-xl tabular text-primary sm:text-display-2xl">
+        {value}
+      </span>
+      {note ? (
+        <span className={cn("flex items-center gap-1 text-caption", toneClasses[tone])}>
+          {trend === "up" && <AppIcon name="trendUp" size="xs" />}
+          {trend === "down" && <AppIcon name="trendDown" size="xs" />}
+          {trend === undefined && <AppIcon name="minus" size="xs" />}
+          <span className="truncate">{note}</span>
+        </span>
+      ) : null}
+    </div>
   );
 }

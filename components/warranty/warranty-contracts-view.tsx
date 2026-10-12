@@ -59,14 +59,14 @@ export function WarrantyContractsView() {
 
   return (
     <div>
-      <PageHeader title="Active Warranty Contracts" subtitle="Financial status of all active warranty obligations" />
+      <PageHeader icon="security" title="Active Warranty Contracts" subtitle="Financial status of all active warranty obligations" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        <StatCard label="Active Contracts" value={`${contracts.length}`} />
-        <StatCard label="Total Exposure" value="₹59.9 Cr" />
-        <StatCard label="Claims Paid YTD" value="₹31.8 Cr" />
-        <StatCard label="Provision Balance" value="₹92.8 Cr" />
-        <StatCard label="Provision Gap" value="₹1.1 Cr" tone="warning" />
+        <StatCard label="Active Contracts" value={`${contracts.length}`} icon="verification" />
+        <StatCard label="Total Exposure" value="₹59.9 Cr" icon="finance" />
+        <StatCard label="Claims Paid YTD" value="₹31.8 Cr" icon="finance" />
+        <StatCard label="Provision Balance" value="₹92.8 Cr" icon="finance" />
+        <StatCard label="Provision Gap" value="₹1.1 Cr" tone="warning" icon="finance" />
       </div>
 
       <div className="mt-6">

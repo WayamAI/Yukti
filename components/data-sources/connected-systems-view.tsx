@@ -4,15 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { dataSources } from "@/lib/data-sources";
 
 function qualityTone(q: number) {
-  if (q >= 95) return "text-[oklch(0.6_0.15_150)]";
-  if (q >= 90) return "text-[oklch(0.55_0.16_60)]";
+  if (q >= 95) return "text-success";
+  if (q >= 90) return "text-warning";
   return "text-destructive";
 }
 
 export function ConnectedSystemsView() {
   return (
     <div>
-      <PageHeader title="Connected Systems" subtitle="Integrated data sources and their health status" />
+      <PageHeader icon="network" title="Connected Systems" subtitle="Integrated data sources and their health status" />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {dataSources.map((s) => (

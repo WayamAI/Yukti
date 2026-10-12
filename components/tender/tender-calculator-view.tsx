@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -53,7 +54,7 @@ export function TenderCalculatorView() {
 
   return (
     <div>
-      <PageHeader title="New Bid Calculator" subtitle="Step-by-step warranty and AMC cost estimation for tender bids" />
+      <PageHeader icon="finance" title="New Bid Calculator" subtitle="Step-by-step warranty and AMC cost estimation for tender bids" />
 
       <div className="mb-6 flex flex-wrap items-center gap-2">
         {steps.map((s, i) => (
@@ -81,7 +82,10 @@ export function TenderCalculatorView() {
       {step === 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Component Selection</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="package" size="md" />
+              <span className="truncate">Component Selection</span>
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
@@ -132,7 +136,10 @@ export function TenderCalculatorView() {
 
       {step === 3 && (
         <Card>
-          <CardHeader><CardTitle className="text-base">Results</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="report" size="md" />
+              <span className="truncate">Results</span>
+            </CardTitle></CardHeader>
           <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div><p className="text-xs text-muted-foreground">BOM Cost</p><p className="text-xl font-semibold">₹{bomCost.toFixed(2)} Cr</p></div>
             <div><p className="text-xs text-muted-foreground">Est. Warranty + AMC Cost</p><p className="text-xl font-semibold">₹{(bomCost * 0.42).toFixed(2)} Cr</p></div>

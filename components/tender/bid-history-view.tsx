@@ -39,13 +39,13 @@ const outcomeTone: Record<Bid["outcome"], "outline" | "destructive" | "secondary
 export function BidHistoryView() {
   return (
     <div>
-      <PageHeader title="Bid History & Win/Loss Analysis" subtitle="Analytical view of all past bids" />
+      <PageHeader icon="analytics" title="Bid History & Win/Loss Analysis" subtitle="Analytical view of all past bids" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label="Total Bids" value={`${bids.length}`} />
-        <StatCard label="Win Rate" value="63%" tone="success" />
-        <StatCard label="Avg Projected Margin" value="17.5%" />
-        <StatCard label="Pending Bids" value="2" tone="warning" />
+        <StatCard label="Total Bids" value={`${bids.length}`} icon="metrics" />
+        <StatCard label="Win Rate" value="63%" tone="success" icon="analytics" />
+        <StatCard label="Avg Projected Margin" value="17.5%" icon="finance" />
+        <StatCard label="Pending Bids" value="2" tone="warning" icon="metrics" />
       </div>
 
       <Card className="mt-6">

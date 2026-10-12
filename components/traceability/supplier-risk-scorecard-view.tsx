@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import {
   BarChart,
   Bar,
@@ -13,7 +14,6 @@ import {
 import { PageHeader } from "@/components/page-header";
 import { StatCard } from "@/components/stat-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowUpRight, ArrowDownRight, Minus } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -31,6 +31,8 @@ import {
 } from "@/components/ui/table";
 import { suppliers } from "@/lib/suppliers";
 import { RiskBadge } from "@/components/risk-badge";
+import { AppIcon } from "@/components/ui/app-icon";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const scoreBuckets = ["30-40", "40-50", "50-60", "60-70", "70-80", "80-90", "90-100"];
 
@@ -59,15 +61,15 @@ export function SupplierRiskScorecardView() {
 
   return (
     <div>
-      <PageHeader title="Supplier Risk Scorecard" subtitle="Composite risk scores across all active suppliers" />
+      <PageHeader icon="target" title="Supplier Risk Scorecard" subtitle="Composite risk scores across all active suppliers" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-        <StatCard label="Active Suppliers" value={`${suppliers.length}`} />
-        <StatCard label="High Risk" value={`${suppliers.filter((s) => s.status === "High").length}`} tone="danger" />
-        <StatCard label="Moderate Risk" value={`${suppliers.filter((s) => s.status === "Moderate").length}`} tone="warning" />
-        <StatCard label="Low Risk" value={`${suppliers.filter((s) => s.status === "Low").length}`} tone="success" />
-        <StatCard label="Avg Composite Score" value={`${Math.round(suppliers.reduce((a, s) => a + s.score, 0) / suppliers.length)}/100`} />
-        <StatCard label="Score Change (QoQ)" value="-2.1 pts" tone="danger" />
+        <StatCard label="Active Suppliers" value={`${suppliers.length}`} icon="handshake" />
+        <StatCard label="High Risk" value={`${suppliers.filter((s) => s.status === "High").length}`} tone="danger" icon="alert" />
+        <StatCard label="Moderate Risk" value={`${suppliers.filter((s) => s.status === "Moderate").length}`} tone="warning" icon="warning" />
+        <StatCard label="Low Risk" value={`${suppliers.filter((s) => s.status === "Low").length}`} tone="success" icon="verification" />
+        <StatCard label="Avg Composite Score" value={`${Math.round(suppliers.reduce((a, s) => a + s.score, 0) / suppliers.length)}/100`} icon="target" />
+        <StatCard label="Score Change (QoQ)" value="-2.1 pts" tone="danger" icon="analytics" />
       </div>
 
       <div className="mt-6 flex flex-wrap gap-3">
@@ -102,7 +104,10 @@ export function SupplierRiskScorecardView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Score Distribution</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="analytics" size="md" />
+              <span className="truncate">Score Distribution</span>
+            </CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={220}>
@@ -119,7 +124,10 @@ export function SupplierRiskScorecardView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Suppliers ({filtered.length})</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="handshake" size="md" />
+              <span className="truncate">Suppliers ({filtered.length})</span>
+            </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
@@ -146,16 +154,16 @@ export function SupplierRiskScorecardView() {
                     <TableCell className="font-medium text-foreground">{s.name}</TableCell>
                     <TableCell className="text-muted-foreground">{s.location}</TableCell>
                     <TableCell className="text-right">{s.components}</TableCell>
-                    <TableCell className="text-right">{s.installedBase.toLocaleString()}</TableCell>
+                    <TableCell className="text-right">{s.installedBase.toLocaleString(NUMBER_LOCALE)}</TableCell>
                     <TableCell className="text-right font-medium">{s.score}/100</TableCell>
                     <TableCell className="text-right">{s.quality}</TableCell>
                     <TableCell className="text-right">{s.delivery}</TableCell>
                     <TableCell className="text-right">{s.financial}</TableCell>
                     <TableCell>
                       <span className="inline-flex items-center gap-0.5 text-xs">
-                        {s.trend > 0 && <ArrowUpRight className="h-3 w-3 text-[oklch(0.6_0.15_150)]" />}
-                        {s.trend < 0 && <ArrowDownRight className="h-3 w-3 text-destructive" />}
-                        {s.trend === 0 && <Minus className="h-3 w-3 text-muted-foreground" />}
+                        {s.trend > 0 && <AppIcon name="deltaUp" size="xs" tone="success" />}
+                        {s.trend < 0 && <AppIcon name="deltaDown" size="xs" tone="error" />}
+                        {s.trend === 0 && <AppIcon name="minus" size="xs" tone="tertiary" />}
                         {s.trend > 0 ? `+${s.trend}` : s.trend}
                       </span>
                     </TableCell>

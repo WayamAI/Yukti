@@ -1,13 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -16,6 +16,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { componentFamilies } from "@/lib/component-families";
+import { AppIcon } from "@/components/ui/app-icon";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const supplierOptions = ["No change", "Bharat Heavy Electricals Ltd.", "Medha Servo Drives"];
 
@@ -47,24 +49,27 @@ export function WhatIfSimulatorView() {
   const insuranceChange = (scenarioExposure - baseExposure) * 0.08;
 
   const changeIcon = useMemo(() => {
-    if (Math.abs(pctChange) < 0.1) return <Minus className="h-4 w-4 text-muted-foreground" />;
+    if (Math.abs(pctChange) < 0.1) return <AppIcon name="minus" size="md" tone="tertiary" />;
     return pctChange > 0 ? (
-      <ArrowUpRight className="h-4 w-4 text-destructive" />
+      <AppIcon name="deltaUp" size="md" tone="error" />
     ) : (
-      <ArrowDownRight className="h-4 w-4 text-[oklch(0.6_0.15_150)]" />
+      <AppIcon name="deltaDown" size="md" tone="success" />
     );
   }, [pctChange]);
 
   return (
     <div>
-      <PageHeader title="What-If Simulator" subtitle="Interactive scenario planning — adjust parameters and see real-time impact" />
+      <PageHeader icon="idea" title="What-If Simulator" subtitle="Interactive scenario planning — adjust parameters and see real-time impact" />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[360px_1fr]">
         <Card className="h-fit">
-          <CardHeader><CardTitle className="text-base">Scenario Parameters</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="controls" size="md" />
+              <span className="truncate">Scenario Parameters</span>
+            </CardTitle></CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Component Family</Label>
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">Component Family</Label>
               <Select
                 value={code}
                 onValueChange={(v) => v && setCode(v)}
@@ -79,7 +84,7 @@ export function WhatIfSimulatorView() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Swap Supplier</Label>
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">Swap Supplier</Label>
               <Select
                 value={supplier}
                 onValueChange={(v) => v && setSupplier(v)}
@@ -94,7 +99,7 @@ export function WhatIfSimulatorView() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">
                 Service Interval: {serviceInterval}%
               </Label>
               <Slider min={50} max={200} step={5} value={[serviceInterval]} onValueChange={(v) => setServiceInterval(Array.isArray(v) ? v[0] : v)} />
@@ -103,11 +108,11 @@ export function WhatIfSimulatorView() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Warranty Duration (years)</Label>
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">Warranty Duration (years)</Label>
               <Input type="number" value={duration} min={1} max={10} onChange={(e) => setDuration(Number(e.target.value) || 1)} />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Production Volume</Label>
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">Production Volume</Label>
               <Input type="number" value={volume} min={1} onChange={(e) => setVolume(Number(e.target.value) || 0)} />
             </div>
             <Button className="w-full">Save Scenario</Button>
@@ -116,7 +121,10 @@ export function WhatIfSimulatorView() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Card>
-            <CardHeader><CardTitle className="text-base">Current State</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="report" size="md" />
+              <span className="truncate">Current State</span>
+            </CardTitle></CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <p className="text-xs text-muted-foreground">Cost per Unit</p>
@@ -128,13 +136,16 @@ export function WhatIfSimulatorView() {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">MTBF</p>
-                <p className="text-2xl font-semibold text-foreground">{baseMtbf.toLocaleString()} hrs</p>
+                <p className="text-2xl font-semibold text-foreground">{baseMtbf.toLocaleString(NUMBER_LOCALE)} hrs</p>
               </div>
             </CardContent>
           </Card>
 
           <Card className="border-primary/40">
-            <CardHeader><CardTitle className="text-base">Scenario Result</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="idea" size="md" />
+              <span className="truncate">Scenario Result</span>
+            </CardTitle></CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <p className="text-xs text-muted-foreground">Cost per Unit</p>
@@ -155,7 +166,7 @@ export function WhatIfSimulatorView() {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">MTBF</p>
-                <p className="text-2xl font-semibold text-foreground">{scenarioMtbf.toLocaleString()} hrs</p>
+                <p className="text-2xl font-semibold text-foreground">{scenarioMtbf.toLocaleString(NUMBER_LOCALE)} hrs</p>
               </div>
             </CardContent>
           </Card>

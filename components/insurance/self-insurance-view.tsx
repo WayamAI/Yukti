@@ -11,10 +11,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { PageHeader } from "@/components/page-header";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { StatCard } from "@/components/stat-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiskBadge } from "@/components/risk-badge";
-import { AlertTriangle } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -23,6 +23,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { AppIcon } from "@/components/ui/app-icon";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const reserveTrend = [
   { year: "FY 2022", reserve: 18, claims: 12 },
@@ -44,17 +46,20 @@ const uninsuredComponents = [
 export function SelfInsuranceView() {
   return (
     <div>
-      <PageHeader title="Self-Insurance Analysis" subtitle="Analysis of warranty exposure not covered by external insurance and reserve adequacy" />
+      <PageHeader icon="finance" title="Self-Insurance Analysis" subtitle="Analysis of warranty exposure not covered by external insurance and reserve adequacy" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label="Self-Insured Exposure" value="₹0.8 Cr" />
-        <StatCard label="Current Reserve" value="₹28.2 Cr" />
-        <StatCard label="Reserve Ratio" value="3600%" tone="success" />
-        <StatCard label="Uninsured Components" value="6" tone="warning" />
+        <StatCard label="Self-Insured Exposure" value="₹0.8 Cr" icon="finance" />
+        <StatCard label="Current Reserve" value="₹28.2 Cr" icon="finance" />
+        <StatCard label="Reserve Ratio" value="3600%" tone="success" icon="finance" />
+        <StatCard label="Uninsured Components" value="6" tone="warning" icon="verification" />
       </div>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">Reserve Adequacy Trend</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="target" size="md" />
+              <span className="truncate">Reserve Adequacy Trend</span>
+            </CardTitle></CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={260}>
             <LineChart data={reserveTrend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -67,15 +72,18 @@ export function SelfInsuranceView() {
               <Line type="monotone" dataKey="claims" name="Actual/Projected Claims" stroke="var(--destructive)" strokeWidth={2} strokeDasharray="4 4" />
             </LineChart>
           </ResponsiveContainer>
-          <div className="mt-3 flex items-start gap-2 rounded-md border border-[oklch(0.75_0.18_70_/_30%)] bg-[oklch(0.75_0.18_70_/_10%)] p-3 text-sm text-[oklch(0.5_0.15_60)]">
-            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+          <div className="mt-3 flex items-start gap-2 rounded-md border border-warning-stroke bg-warning-background p-3 text-sm text-warning">
+            <AppIcon name="warning" size="md" className="mt-0.5" />
             Reserve ratio projected to fall below 100% in FY 2026 — action recommended
           </div>
         </CardContent>
       </Card>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">Self-Insured Components</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="verification" size="md" />
+              <span className="truncate">Self-Insured Components</span>
+            </CardTitle></CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
@@ -94,7 +102,7 @@ export function SelfInsuranceView() {
                 <TableRow key={c.code}>
                   <TableCell className="font-medium text-foreground">{c.component}</TableCell>
                   <TableCell className="text-muted-foreground">{c.code}</TableCell>
-                  <TableCell className="text-right">{c.installedBase.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">{c.installedBase.toLocaleString(NUMBER_LOCALE)}</TableCell>
                   <TableCell className="text-right">{c.failureRate}</TableCell>
                   <TableCell className="text-right">{c.avgRepairCost}</TableCell>
                   <TableCell className="text-right">{c.annualExposure}</TableCell>

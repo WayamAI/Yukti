@@ -13,13 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ArrowUpRight, ArrowDownRight, Minus } from "lucide-react";
 import { fleetHealthRows, fleetHealthCategories } from "@/lib/fleet-health-data";
+import { AppIcon } from "@/components/ui/app-icon";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 function TrendIcon({ trend }: { trend: "up" | "down" | "flat" }) {
-  if (trend === "up") return <ArrowUpRight className="h-3.5 w-3.5 text-[oklch(0.6_0.15_150)]" />;
-  if (trend === "down") return <ArrowDownRight className="h-3.5 w-3.5 text-destructive" />;
-  return <Minus className="h-3.5 w-3.5 text-muted-foreground" />;
+  if (trend === "up") return <AppIcon name="deltaUp" size="sm" tone="success" />;
+  if (trend === "down") return <AppIcon name="deltaDown" size="sm" tone="error" />;
+  return <AppIcon name="minus" size="sm" tone="tertiary" />;
 }
 
 export function FleetHealthView() {
@@ -38,8 +39,9 @@ export function FleetHealthView() {
   return (
     <div>
       <PageHeader
+        icon="activity"
         title="Fleet Health Overview"
-        subtitle={`Reliability status of ${fleetHealthRows.length} component families across ${totalUnits.toLocaleString()} installed units`}
+        subtitle={`Reliability status of ${fleetHealthRows.length} component families across ${totalUnits.toLocaleString(NUMBER_LOCALE)} installed units`}
       />
 
       <div className="mb-4">
@@ -68,10 +70,10 @@ export function FleetHealthView() {
                   <TableRow key={r.code}>
                     <TableCell className="font-medium text-foreground">{r.family}</TableCell>
                     <TableCell className="text-muted-foreground">{r.code}</TableCell>
-                    <TableCell className="text-right">{r.installedBase.toLocaleString()}</TableCell>
+                    <TableCell className="text-right">{r.installedBase.toLocaleString(NUMBER_LOCALE)}</TableCell>
                     <TableCell className="text-right">
                       <span className="inline-flex items-center gap-1">
-                        {r.mtbf.toLocaleString()}
+                        {r.mtbf.toLocaleString(NUMBER_LOCALE)}
                         <TrendIcon trend={r.trend} />
                       </span>
                     </TableCell>

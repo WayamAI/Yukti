@@ -1,15 +1,4 @@
-import type { LucideIcon } from "lucide-react";
-import {
-  LayoutDashboard,
-  Activity,
-  GitBranch,
-  ShieldCheck,
-  Wrench,
-  Umbrella,
-  FileSpreadsheet,
-  Database,
-  Settings as SettingsIcon,
-} from "lucide-react";
+import type { IconName } from "@/lib/icons";
 
 export type NavLink = {
   label: string;
@@ -18,20 +7,22 @@ export type NavLink = {
 
 export type NavGroup = {
   label: string;
-  icon: LucideIcon;
+  icon: IconName;
   href?: string;
   children?: NavLink[];
+  /** "bottom" pins the group to the sidebar's utility cluster. */
+  placement?: "primary" | "bottom";
 };
 
 export const navGroups: NavGroup[] = [
   {
     label: "Dashboard",
-    icon: LayoutDashboard,
+    icon: "dashboard",
     href: "/",
   },
   {
     label: "Component Reliability",
-    icon: Activity,
+    icon: "reliability",
     children: [
       { label: "Fleet Health Overview", href: "/fleet-health" },
       { label: "Failure Analysis", href: "/failure-analysis" },
@@ -41,7 +32,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "Traceability & Risk",
-    icon: GitBranch,
+    icon: "traceability",
     children: [
       { label: "Component Genealogy", href: "/component-genealogy" },
       { label: "Supplier Risk Scorecard", href: "/supplier-risk-scorecard" },
@@ -52,7 +43,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "Warranty Intelligence",
-    icon: ShieldCheck,
+    icon: "warranty",
     children: [
       { label: "Warranty Cost Modeler", href: "/warranty-cost-modeler" },
       { label: "Active Contracts", href: "/warranty-contracts" },
@@ -62,7 +53,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "AMC Management",
-    icon: Wrench,
+    icon: "maintenance",
     children: [
       { label: "AMC Portfolio", href: "/amc-portfolio" },
       { label: "AMC Pricing Engine", href: "/amc-pricing" },
@@ -71,7 +62,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "Insurance",
-    icon: Umbrella,
+    icon: "insurance",
     children: [
       { label: "Coverage Overview", href: "/insurance-coverage" },
       { label: "Actual vs. Assumed Risk", href: "/insurance-risk" },
@@ -81,7 +72,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "Tender Support",
-    icon: FileSpreadsheet,
+    icon: "tender",
     children: [
       { label: "New Bid Calculator", href: "/tender-calculator" },
       { label: "Bid History", href: "/bid-history" },
@@ -89,7 +80,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "Data Sources",
-    icon: Database,
+    icon: "dataSources",
     children: [
       { label: "Connected Systems", href: "/connected-systems" },
       { label: "Data Quality Monitor", href: "/data-quality" },
@@ -98,7 +89,8 @@ export const navGroups: NavGroup[] = [
   },
   {
     label: "Settings",
-    icon: SettingsIcon,
+    icon: "settings",
+    placement: "bottom",
     children: [
       { label: "User Management", href: "/user-management" },
       { label: "Alert Configuration", href: "/alert-config" },
@@ -106,3 +98,21 @@ export const navGroups: NavGroup[] = [
     ],
   },
 ];
+
+/** The navigation entry whose href matches `pathname`, if any. */
+export function navItemForPath(pathname: string): NavLink | undefined {
+  for (const group of navGroups) {
+    if (group.href === pathname) return { label: group.label, href: group.href };
+    const child = group.children?.find((c) => c.href === pathname);
+    if (child) return child;
+  }
+  return undefined;
+}
+
+/** The group that owns `pathname` (used for the top bar eyebrow). */
+export function groupForPath(pathname: string): NavGroup | undefined {
+  return navGroups.find((group) => {
+    if (group.href === pathname) return true;
+    return group.children?.some((c) => c.href === pathname) ?? false;
+  });
+}

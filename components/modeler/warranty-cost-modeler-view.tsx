@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import {
   LineChart,
   Line,
@@ -128,6 +129,7 @@ export function WarrantyCostModelerView() {
   return (
     <div>
       <PageHeader
+        icon="metrics"
         title="Warranty Cost Modeler"
         subtitle="Interactive warranty cost calculator based on reliability data"
       />
@@ -135,11 +137,14 @@ export function WarrantyCostModelerView() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[360px_1fr]">
         <Card className="h-fit">
           <CardHeader>
-            <CardTitle className="text-base">Configuration</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="controls" size="md" />
+              <span className="truncate">Configuration</span>
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">
                 Component Family
               </Label>
               <Select
@@ -161,7 +166,7 @@ export function WarrantyCostModelerView() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">
                 Warranty Duration: {duration} Year{duration > 1 ? "s" : ""}
               </Label>
               <Slider
@@ -178,7 +183,7 @@ export function WarrantyCostModelerView() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">
                 Coverage Scope
               </Label>
               <div className="grid grid-cols-3 gap-2">
@@ -197,7 +202,7 @@ export function WarrantyCostModelerView() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">
                 Operating Profile
               </Label>
               <div className="grid grid-cols-3 gap-2">
@@ -216,7 +221,7 @@ export function WarrantyCostModelerView() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <Label className="text-xs font-medium  tracking-wide text-muted-foreground">
                 Annual Production Volume
               </Label>
               <Input
@@ -243,7 +248,7 @@ export function WarrantyCostModelerView() {
         <div className="space-y-6">
           <Card>
             <CardContent className="p-6 text-center">
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <p className="text-xs font-medium  tracking-wide text-muted-foreground">
                 Expected Warranty Cost Per Unit
               </p>
               <p className="mt-2 text-4xl font-semibold text-foreground">
@@ -257,7 +262,10 @@ export function WarrantyCostModelerView() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Cost vs. Duration</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Cost vs. Duration</span>
+            </CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={260}>
@@ -296,7 +304,10 @@ export function WarrantyCostModelerView() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Cost Breakdown</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Cost Breakdown</span>
+            </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {breakdown.map((b) => (
@@ -305,7 +316,7 @@ export function WarrantyCostModelerView() {
                       <span className="text-foreground">{b.label}</span>
                       <span className="text-muted-foreground">{formatLakh(b.value)}</span>
                     </div>
-                    <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+                    <div className="h-1.5 w-full rounded-full bg-raised overflow-hidden">
                       <div
                         className="h-full rounded-full bg-primary"
                         style={{ width: `${Math.min(100, (b.value / expectedCost) * 100)}%` }}
@@ -318,12 +329,15 @@ export function WarrantyCostModelerView() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Sensitivity Analysis</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="report" size="md" />
+              <span className="truncate">Sensitivity Analysis</span>
+            </CardTitle>
               </CardHeader>
               <CardContent>
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground">
+                    <tr className="text-left text-xs  tracking-wide text-muted-foreground">
                       <th className="pb-2 font-medium">Variable</th>
                       <th className="pb-2 font-medium">-20%</th>
                       <th className="pb-2 font-medium">+20%</th>
@@ -335,14 +349,14 @@ export function WarrantyCostModelerView() {
                       <tr key={s.variable} className="border-t border-border">
                         <td className="py-2 text-foreground">{s.variable}</td>
                         <td className="py-2 text-destructive">{formatLakh(s.low)}/unit</td>
-                        <td className="py-2 text-[oklch(0.6_0.15_150)]">+{formatLakh(s.high)}/unit</td>
+                        <td className="py-2 text-success">+{formatLakh(s.high)}/unit</td>
                         <td className="py-2">
                           <span
                             className={cn(
                               "rounded-full px-2 py-0.5 text-xs font-medium",
                               s.impact === "High" && "bg-destructive/10 text-destructive",
                               s.impact === "Medium" && "bg-accent text-accent-foreground",
-                              s.impact === "Low" && "bg-muted text-muted-foreground"
+                              s.impact === "Low" && "bg-raised text-muted-foreground"
                             )}
                           >
                             {s.impact}
@@ -358,7 +372,10 @@ export function WarrantyCostModelerView() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Annual Warranty Exposure (Cumulative)</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Annual Warranty Exposure (Cumulative)</span>
+            </CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={240}>

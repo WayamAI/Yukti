@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/page-header";
@@ -22,16 +22,16 @@ type User = {
 };
 
 const users: User[] = [
-  { name: "Rajesh Kumar", email: "rajesh.kumar@optimizeai.in", role: "Executive", department: "Management", lastLogin: "20/3/2026", status: "active" },
-  { name: "Priya Sharma", email: "priya.sharma@optimizeai.in", role: "Engineering", department: "Reliability Engineering", lastLogin: "20/3/2026", status: "active" },
-  { name: "Arjun Mehta", email: "arjun.mehta@optimizeai.in", role: "Commercial", department: "Tender Support", lastLogin: "19/3/2026", status: "active" },
-  { name: "Kavita Joshi", email: "kavita.joshi@optimizeai.in", role: "Finance", department: "Financial Planning", lastLogin: "17/3/2026", status: "inactive" },
-  { name: "Sanjay Rao", email: "sanjay.rao@optimizeai.in", role: "Engineering", department: "Quality Assurance", lastLogin: "20/3/2026", status: "active" },
-  { name: "Neha Gupta", email: "neha.gupta@optimizeai.in", role: "Commercial", department: "AMC Management", lastLogin: "18/3/2026", status: "active" },
-  { name: "Vikram Singh", email: "vikram.singh@optimizeai.in", role: "Engineering", department: "Supplier Quality", lastLogin: "20/3/2026", status: "active" },
-  { name: "Anjali Nair", email: "anjali.nair@optimizeai.in", role: "Finance", department: "Insurance & Risk", lastLogin: "16/3/2026", status: "inactive" },
-  { name: "Rohan Desai", email: "rohan.desai@optimizeai.in", role: "Executive", department: "Operations", lastLogin: "19/3/2026", status: "active" },
-  { name: "Meera Iyer", email: "meera.iyer@optimizeai.in", role: "Engineering", department: "Data Engineering", lastLogin: "20/3/2026", status: "active" },
+  { name: "Rajesh Kumar", email: "rajesh.kumar@yukti.in", role: "Executive", department: "Management", lastLogin: "20/3/2026", status: "active" },
+  { name: "Priya Sharma", email: "priya.sharma@yukti.in", role: "Engineering", department: "Reliability Engineering", lastLogin: "20/3/2026", status: "active" },
+  { name: "Arjun Mehta", email: "arjun.mehta@yukti.in", role: "Commercial", department: "Tender Support", lastLogin: "19/3/2026", status: "active" },
+  { name: "Kavita Joshi", email: "kavita.joshi@yukti.in", role: "Finance", department: "Financial Planning", lastLogin: "17/3/2026", status: "inactive" },
+  { name: "Sanjay Rao", email: "sanjay.rao@yukti.in", role: "Engineering", department: "Quality Assurance", lastLogin: "20/3/2026", status: "active" },
+  { name: "Neha Gupta", email: "neha.gupta@yukti.in", role: "Commercial", department: "AMC Management", lastLogin: "18/3/2026", status: "active" },
+  { name: "Vikram Singh", email: "vikram.singh@yukti.in", role: "Engineering", department: "Supplier Quality", lastLogin: "20/3/2026", status: "active" },
+  { name: "Anjali Nair", email: "anjali.nair@yukti.in", role: "Finance", department: "Insurance & Risk", lastLogin: "16/3/2026", status: "inactive" },
+  { name: "Rohan Desai", email: "rohan.desai@yukti.in", role: "Executive", department: "Operations", lastLogin: "19/3/2026", status: "active" },
+  { name: "Meera Iyer", email: "meera.iyer@yukti.in", role: "Engineering", department: "Data Engineering", lastLogin: "20/3/2026", status: "active" },
 ];
 
 export function UserManagementView() {
@@ -45,15 +45,15 @@ export function UserManagementView() {
   return (
     <div>
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-        <PageHeader title="User Management" subtitle="Manage platform users, roles, and access permissions" />
+        <PageHeader icon="users" title="User Management" subtitle="Manage platform users, roles, and access permissions" />
         <Button>Invite User</Button>
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label="Total Users" value={`${users.length}`} />
-        <StatCard label="Active" value={`${users.filter((u) => u.status === "active").length}`} tone="success" />
-        <StatCard label="Roles" value="4" />
-        <StatCard label="Last 24h Active" value="7" />
+        <StatCard label="Total Users" value={`${users.length}`} icon="users" />
+        <StatCard label="Active" value={`${users.filter((u) => u.status === "active").length}`} tone="success" icon="metrics" />
+        <StatCard label="Roles" value="4" icon="users" />
+        <StatCard label="Last 24h Active" value="7" icon="time" />
       </div>
 
       <div className="mt-6">

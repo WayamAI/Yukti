@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,18 +17,23 @@ export default async function LoginPage({
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center gap-3 text-center">
-          <Image
-            src="/brand/logo-main-light.svg"
-            alt="Wayam AI"
-            width={64}
-            height={64}
-            className="h-14 w-14"
-            priority
-          />
-          <div>
-            <p className="text-lg font-semibold text-foreground">OptimizeAI</p>
-            <p className="text-sm text-muted-foreground">Warranty &amp; Service Intelligence</p>
-          </div>
+          <picture>
+            <source
+              srcSet="/brand/logo-main-light.svg"
+              media="(prefers-color-scheme: light)"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/logo-main-dark.svg"
+              alt="Yukti"
+              width={72}
+              height={72}
+              className="h-[72px] w-[72px]"
+            />
+          </picture>
+          <p className="text-sm text-muted-foreground">
+            Warranty &amp; Service Intelligence
+          </p>
         </div>
 
         <Card>

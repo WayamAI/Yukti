@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import {
   LineChart,
   Line,
@@ -86,14 +87,17 @@ export function AmcPricingView() {
 
   return (
     <div>
-      <PageHeader title="AMC Pricing Engine" subtitle="Calculator for pricing new or renewal Annual Maintenance Contracts" />
+      <PageHeader icon="finance" title="AMC Pricing Engine" subtitle="Calculator for pricing new or renewal Annual Maintenance Contracts" />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[380px_1fr]">
         <Card className="h-fit">
-          <CardHeader><CardTitle className="text-base">Fleet &amp; Contract Configuration</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="verification" size="md" />
+              <span className="truncate">Fleet &amp; Contract Configuration</span>
+            </CardTitle></CardHeader>
           <CardContent className="space-y-5">
             <div className="space-y-2">
-              <Label className="text-xs uppercase text-muted-foreground">Product Line</Label>
+              <Label className="text-xs  text-muted-foreground">Product Line</Label>
               <Select
                 value={productLine}
                 onValueChange={(v) => v && setProductLine(v)}
@@ -106,15 +110,15 @@ export function AmcPricingView() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs uppercase text-muted-foreground">Fleet Size</Label>
+              <Label className="text-xs  text-muted-foreground">Fleet Size</Label>
               <Input type="number" value={fleetSize} onChange={(e) => setFleetSize(Number(e.target.value) || 0)} />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs uppercase text-muted-foreground">Contract Duration (years)</Label>
+              <Label className="text-xs  text-muted-foreground">Contract Duration (years)</Label>
               <Input type="number" value={duration} onChange={(e) => setDuration(Number(e.target.value) || 1)} />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs uppercase text-muted-foreground">Service Level</Label>
+              <Label className="text-xs  text-muted-foreground">Service Level</Label>
               <div className="grid grid-cols-2 gap-2">
                 {(["Standard", "Premium"] as const).map((l) => (
                   <Button key={l} type="button" variant={serviceLevel === l ? "default" : "outline"} onClick={() => setServiceLevel(l)}>{l}</Button>
@@ -122,7 +126,7 @@ export function AmcPricingView() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs uppercase text-muted-foreground">Risk-Adjusted Pricing</Label>
+              <Label className="text-xs  text-muted-foreground">Risk-Adjusted Pricing</Label>
               <div className="grid grid-cols-3 gap-2">
                 {(["Conservative", "Balanced", "Aggressive"] as const).map((l) => (
                   <Button key={l} type="button" size="sm" variant={riskProfile === l ? "default" : "outline"} onClick={() => setRiskProfile(l)}>{l}</Button>
@@ -135,15 +139,15 @@ export function AmcPricingView() {
               <Label htmlFor="spares" className="text-sm font-normal">Include spare parts inventory holding cost</Label>
             </div>
             <div className="space-y-2">
-              <Label className="text-xs uppercase text-muted-foreground">Annual Escalation (%)</Label>
+              <Label className="text-xs  text-muted-foreground">Annual Escalation (%)</Label>
               <Input type="number" value={escalation} onChange={(e) => setEscalation(Number(e.target.value) || 0)} />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs uppercase text-muted-foreground">Target Margin (%)</Label>
+              <Label className="text-xs  text-muted-foreground">Target Margin (%)</Label>
               <Input type="number" value={targetMargin} onChange={(e) => setTargetMargin(Number(e.target.value) || 0)} />
             </div>
             <div>
-              <Label className="text-xs uppercase text-muted-foreground">Components Covered</Label>
+              <Label className="text-xs  text-muted-foreground">Components Covered</Label>
               <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
                 {componentsCovered.map((c) => <li key={c}>• {c}</li>)}
               </ul>
@@ -154,7 +158,7 @@ export function AmcPricingView() {
         <div className="space-y-6">
           <Card>
             <CardContent className="p-6 text-center">
-              <p className="text-xs uppercase text-muted-foreground">Recommended Annual Contract Price</p>
+              <p className="text-xs  text-muted-foreground">Recommended Annual Contract Price</p>
               <p className="mt-2 text-3xl font-semibold text-foreground">₹{(recommendedPrice / duration).toFixed(2)} Cr</p>
               <p className="mt-1 text-sm text-muted-foreground">Range: ₹{(priceLow / duration).toFixed(2)} Cr – ₹{(priceHigh / duration).toFixed(2)} Cr</p>
               <p className="mt-1 text-xs text-muted-foreground">Per unit: ₹{perUnitPerYear.toFixed(2)}L/year · Target margin: {targetMargin}%</p>
@@ -162,7 +166,10 @@ export function AmcPricingView() {
           </Card>
 
           <Card>
-            <CardHeader><CardTitle className="text-base">Cost Breakdown (Annual)</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Cost Breakdown (Annual)</span>
+            </CardTitle></CardHeader>
             <CardContent className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               <div><p className="text-xs text-muted-foreground">Scheduled Maintenance</p><p className="font-medium">₹{scheduled.toFixed(2)}Cr</p><p className="text-xs text-muted-foreground">{((scheduled / totalAnnualCost) * 100).toFixed(0)}%</p></div>
               <div><p className="text-xs text-muted-foreground">Unscheduled Repairs</p><p className="font-medium">₹{unscheduled.toFixed(2)}Cr</p><p className="text-xs text-muted-foreground">{((unscheduled / totalAnnualCost) * 100).toFixed(0)}%</p></div>
@@ -173,7 +180,10 @@ export function AmcPricingView() {
           </Card>
 
           <Card>
-            <CardHeader><CardTitle className="text-base">Margin Projection Over Contract Term</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Margin Projection Over Contract Term</span>
+            </CardTitle></CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={240}>
                 <LineChart data={projection} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -193,7 +203,10 @@ export function AmcPricingView() {
           </Card>
 
           <Card>
-            <CardHeader><CardTitle className="text-base">Historical Pricing Comparison</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Historical Pricing Comparison</span>
+            </CardTitle></CardHeader>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>

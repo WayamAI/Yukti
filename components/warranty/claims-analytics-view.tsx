@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { PageHeader } from "@/components/page-header";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { StatCard } from "@/components/stat-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -57,19 +58,22 @@ const anomalies = [
 export function ClaimsAnalyticsView() {
   return (
     <div>
-      <PageHeader title="Claims Analytics" subtitle="Analytical views across all warranty claims" />
+      <PageHeader icon="analytics" title="Claims Analytics" subtitle="Analytical views across all warranty claims" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        <StatCard label="Total Claims (12m)" value="347" />
-        <StatCard label="Total Claim Value" value="₹18.4 Cr" />
-        <StatCard label="Average Claim Value" value="₹5.3L" />
-        <StatCard label="Avg Resolution Time" value="6.2 days" tone="warning" />
-        <StatCard label="Approval Rate" value="89.4%" tone="success" />
+        <StatCard label="Total Claims (12m)" value="347" icon="checklist" />
+        <StatCard label="Total Claim Value" value="₹18.4 Cr" icon="finance" />
+        <StatCard label="Average Claim Value" value="₹5.3L" icon="finance" />
+        <StatCard label="Avg Resolution Time" value="6.2 days" tone="warning" icon="metrics" />
+        <StatCard label="Approval Rate" value="89.4%" tone="success" icon="verification" />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
-          <CardHeader><CardTitle className="text-base">Claims Trend (24 months)</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="checklist" size="md" />
+              <span className="truncate">Claims Trend (24 months)</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={240}>
               <LineChart data={claimsTrend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -83,7 +87,10 @@ export function ClaimsAnalyticsView() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Claims by Component Family</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="checklist" size="md" />
+              <span className="truncate">Claims by Component Family</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={byFamily} layout="vertical" margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
@@ -97,7 +104,10 @@ export function ClaimsAnalyticsView() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Failure Mode Pareto</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="warning" size="md" />
+              <span className="truncate">Failure Mode Pareto</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={failureModes} layout="vertical" margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
@@ -111,7 +121,10 @@ export function ClaimsAnalyticsView() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-base">Claims by Supplier</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="checklist" size="md" />
+              <span className="truncate">Claims by Supplier</span>
+            </CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={bySupplier} layout="vertical" margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
@@ -127,7 +140,10 @@ export function ClaimsAnalyticsView() {
       </div>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">AI-Detected Anomalies</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="warning" size="md" />
+              <span className="truncate">AI-Detected Anomalies</span>
+            </CardTitle></CardHeader>
         <CardContent className="space-y-3">
           {anomalies.map((a, i) => (
             <div key={i} className="flex items-start gap-3">

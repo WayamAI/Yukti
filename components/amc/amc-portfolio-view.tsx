@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import {
   ScatterChart,
   Scatter,
@@ -60,18 +61,21 @@ export function AmcPortfolioView() {
 
   return (
     <div>
-      <PageHeader title="AMC Portfolio" subtitle="Overview of Annual Maintenance Contracts" />
+      <PageHeader icon="maintenance" title="AMC Portfolio" subtitle="Overview of Annual Maintenance Contracts" />
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        <StatCard label="Active AMCs" value={`${contracts.length}`} />
-        <StatCard label="Total Contract Value" value="₹153 Cr" />
-        <StatCard label="Expected Service Cost" value="₹125 Cr" />
-        <StatCard label="Portfolio Margin" value="23.4%" tone="warning" />
-        <StatCard label="Contracts at Risk" value="5" tone="danger" />
+        <StatCard label="Active AMCs" value={`${contracts.length}`} icon="tools" />
+        <StatCard label="Total Contract Value" value="₹153 Cr" icon="finance" />
+        <StatCard label="Expected Service Cost" value="₹125 Cr" icon="finance" />
+        <StatCard label="Portfolio Margin" value="23.4%" tone="warning" icon="finance" />
+        <StatCard label="Contracts at Risk" value="5" tone="danger" icon="target" />
       </div>
 
       <Card className="mt-6">
-        <CardHeader><CardTitle className="text-base">Margin Distribution</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="finance" size="md" />
+              <span className="truncate">Margin Distribution</span>
+            </CardTitle></CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={260}>
             <ScatterChart margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>

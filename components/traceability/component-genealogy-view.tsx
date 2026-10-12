@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { YuktiIcon } from "@/components/ui/yukti-icon";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -15,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { NUMBER_LOCALE } from "@/lib/utils";
 
 const recentTraces = [
   { type: "Batch ID", timestamp: "20 Mar 2026, 09:14", identifier: "Batch #TM-2026-Q1", units: 240 },
@@ -31,13 +33,17 @@ export function ComponentGenealogyView() {
   return (
     <div>
       <PageHeader
+        icon="hierarchy"
         title="Component Genealogy"
         subtitle="Trace any component forward or backward through the supply chain"
       />
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Search and trace the full genealogy</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="hierarchy" size="md" />
+              <span className="truncate">Search and trace the full genealogy</span>
+            </CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs value={tab} onValueChange={setTab}>
@@ -89,7 +95,10 @@ export function ComponentGenealogyView() {
 
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-base">Recent Traces</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+              <YuktiIcon name="activity" size="md" />
+              <span className="truncate">Recent Traces</span>
+            </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
@@ -107,7 +116,7 @@ export function ComponentGenealogyView() {
                   <TableCell className="text-muted-foreground">{t.type}</TableCell>
                   <TableCell className="text-muted-foreground">{t.timestamp}</TableCell>
                   <TableCell className="font-medium text-foreground">{t.identifier}</TableCell>
-                  <TableCell className="text-right">{t.units.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">{t.units.toLocaleString(NUMBER_LOCALE)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
